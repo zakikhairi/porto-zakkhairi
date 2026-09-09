@@ -499,6 +499,7 @@ export const CmsStudioModal: React.FC<CmsStudioProps> = ({
                       className="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-white"
                     >
                       <option value="film">🎬 Film & Sinema</option>
+                      <option value="fotografi">📷 Fotografi</option>
                       <option value="web">Web Application</option>
                       <option value="mobile">Mobile App</option>
                       <option value="ai">AI / 3D Graphics</option>

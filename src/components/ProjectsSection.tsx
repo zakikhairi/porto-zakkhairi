@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ExternalLink, Sparkles, FolderGit2, X, CheckCircle2, Play, Clapperboard } from 'lucide-react';
+import { ExternalLink, Sparkles, FolderGit2, X, CheckCircle2, Play, Clapperboard, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Project } from '../types/portfolio';
 import { GithubIcon } from './icons/GithubIcon';
+import { InstagramIcon } from './icons/InstagramIcon';
 import { sounds } from '../utils/soundEffects';
 
 interface ProjectsProps {
@@ -9,12 +10,15 @@ interface ProjectsProps {
 }
 
 export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'film' | 'web' | 'mobile' | 'ai' | 'fullstack'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'film' | 'fotografi' | 'web' | 'mobile' | 'ai' | 'fullstack'>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [cardSlideIndex, setCardSlideIndex] = useState<{ [projectId: string]: number }>({});
+  const [modalSlideIndex, setModalSlideIndex] = useState<number>(0);
 
   const filters = [
     { id: 'all', label: 'Semua Karya' },
     { id: 'film', label: '🎬 Film & Sinema' },
+    { id: 'fotografi', label: '📷 Fotografi' },
     { id: 'web', label: 'Web Applications' },
     { id: 'ai', label: 'AI & 3D' },
     { id: 'fullstack', label: 'Fullstack' },
@@ -24,12 +28,21 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
     ? projects
     : projects.filter(p => p.category === activeFilter);
 
+  const getProjectImages = (proj: Project): string[] => {
+    if (proj.images && proj.images.length > 0) return proj.images;
+    if (proj.slides && proj.slides.length > 0) return proj.slides.map(s => s.image);
+    return [proj.image];
+  };
+
   const handleCardClick = (proj: Project) => {
     if (proj.category === 'film' || proj.youtubeId) {
       sounds.playCinema();
+    } else if (proj.category === 'fotografi') {
+      sounds.playCameraShutter();
     } else {
       sounds.playPop(580);
     }
+    setModalSlideIndex(cardSlideIndex[proj.id] || 0);
     setSelectedProject(proj);
   };
 
@@ -45,7 +58,7 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
           Proyek Terpilih & Eksperimen
         </h2>
         <p className="text-slate-400 text-sm">
-          Koleksi karya film sinematik peraih penghargaan, web aplikasi, visualisasi interaktif, dan sistem TI.
+          Koleksi karya film sinematik, karya fotografi peraih juara, web aplikasi interaktif, dan sistem TI.
         </p>
 
         {/* Filter Buttons */}
@@ -71,128 +84,202 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProjects.map((project) => (
-          <div
-            key={project.id}
-            onClick={() => handleCardClick(project)}
-            className="group relative rounded-3xl glass-card border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-300 shadow-xl"
-          >
-            {/* Top Image Banner with Gradient Overlay */}
-            <div className="relative h-48 w-full overflow-hidden bg-slate-900">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+        {filteredProjects.map((project) => {
+          const images = getProjectImages(project);
+          const currentSlide = cardSlideIndex[project.id] || 0;
+          const isMultiSlide = images.length > 1;
 
-              {/* Play Badge Overlay for Videos */}
-              {project.youtubeId && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                  <div className="w-14 h-14 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 transition-transform backdrop-blur-sm border border-white/40 ring-4 ring-red-600/30 animate-pulse">
-                    <Play className="w-6 h-6 ml-0.5 fill-white text-white" />
+          return (
+            <div
+              key={project.id}
+              onClick={() => handleCardClick(project)}
+              className="group relative rounded-3xl glass-card border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-300 shadow-xl"
+            >
+              {/* Top Image Banner with Gradient Overlay */}
+              <div className="relative h-52 w-full overflow-hidden bg-slate-900">
+                <img
+                  src={images[currentSlide] || project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+
+                {/* Multi-Slide Navigation Arrows for Card */}
+                {isMultiSlide && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        sounds.playClick();
+                        setCardSlideIndex(prev => ({
+                          ...prev,
+                          [project.id]: (currentSlide - 1 + images.length) % images.length
+                        }));
+                      }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/75 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 z-20 cursor-pointer shadow-lg"
+                      title="Slide Sebelumnya"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        sounds.playClick();
+                        setCardSlideIndex(prev => ({
+                          ...prev,
+                          [project.id]: (currentSlide + 1) % images.length
+                        }));
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/75 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 z-20 cursor-pointer shadow-lg"
+                      title="Slide Berikutnya"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+
+                    {/* Slide Dots Indicator */}
+                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 z-10 pointer-events-none">
+                      {images.map((_, i) => (
+                        <span
+                          key={i}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            i === currentSlide ? 'bg-pink-400 w-4' : 'bg-white/40 w-1.5'
+                          }`}
+                        />
+                      ))}
+                      <span className="text-[10px] font-mono text-slate-300 font-bold ml-1">
+                        {currentSlide + 1}/{images.length}
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {/* Play Badge Overlay for Videos */}
+                {project.youtubeId && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                    <div className="w-14 h-14 rounded-2xl bg-red-600 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 transition-transform backdrop-blur-sm border border-white/40 ring-4 ring-red-600/30 animate-pulse">
+                      <Play className="w-6 h-6 ml-0.5 fill-white text-white" />
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white text-[11px] font-bold tracking-wide backdrop-blur-md flex items-center gap-1.5 shadow-lg group-hover:border-red-500/60 transition">
+                      <Clapperboard className="w-3 h-3 text-red-400" />
+                      <span>Mode Bioskop</span>
+                    </span>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white text-[11px] font-bold tracking-wide backdrop-blur-md flex items-center gap-1.5 shadow-lg group-hover:border-red-500/60 transition">
-                    <Clapperboard className="w-3 h-3 text-red-400" />
-                    <span>Mode Bioskop</span>
+                )}
+
+                {/* Category Pill */}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md flex items-center gap-1.5 border shadow-sm ${
+                    project.category === 'film'
+                      ? 'bg-red-950/85 border-red-500/40 text-red-300'
+                      : project.category === 'fotografi'
+                      ? 'bg-pink-950/85 border-pink-500/40 text-pink-300'
+                      : 'bg-slate-900/85 border-white/20 text-white'
+                  }`}>
+                    {project.category === 'film' && <Clapperboard className="w-3 h-3 text-red-400" />}
+                    {project.category === 'fotografi' && <Camera className="w-3 h-3 text-pink-400" />}
+                    {project.category}
                   </span>
                 </div>
-              )}
 
-              {/* Category Pill */}
-              <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md flex items-center gap-1 border ${
-                  project.category === 'film'
-                    ? 'bg-red-950/80 border-red-500/40 text-red-300'
-                    : 'bg-slate-900/80 border-white/20 text-white'
-                }`}>
-                  {project.category === 'film' && <Clapperboard className="w-3 h-3 text-red-400" />}
-                  {project.category}
-                </span>
+                {/* Action / Multi-slide Badge */}
+                <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+                  {isMultiSlide && (
+                    <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/40 text-pink-300 text-[10px] font-mono font-bold flex items-center gap-1 shadow-md">
+                      <Camera className="w-3 h-3 text-pink-400" />
+                      <span>2 Slide</span>
+                    </span>
+                  )}
+                  {project.youtubeId ? (
+                    <span className="p-1.5 rounded-lg bg-red-600 text-white shadow-md">
+                      <Play className="w-3.5 h-3.5 fill-white" />
+                    </span>
+                  ) : project.demoUrl ? (
+                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-cyan-400 hover:text-white">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </span>
+                  ) : null}
+                  {project.githubUrl && (
+                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-purple-400 hover:text-white">
+                      <GithubIcon className="w-3.5 h-3.5" />
+                    </span>
+                  )}
+                </div>
               </div>
 
-              {/* Action Icons */}
-              <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                {project.youtubeId ? (
-                  <span className="p-1.5 rounded-lg bg-red-600 text-white shadow-md">
-                    <Play className="w-3.5 h-3.5 fill-white" />
-                  </span>
-                ) : project.demoUrl ? (
-                  <span className="p-1.5 rounded-lg bg-slate-900/80 text-cyan-400 hover:text-white">
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </span>
-                ) : null}
-                {project.githubUrl && (
-                  <span className="p-1.5 rounded-lg bg-slate-900/80 text-purple-400 hover:text-white">
-                    <GithubIcon className="w-3.5 h-3.5" />
-                  </span>
+              {/* Content Body */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-lg text-white group-hover:text-pink-400 transition">
+                      {project.title}
+                    </h3>
+                    {project.featured && (
+                      <span className="flex items-center gap-1 text-[10px] font-semibold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-full border border-yellow-400/20">
+                        <Sparkles className="w-3 h-3" />
+                        Featured
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-slate-300"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Bottom Quick Stats or Info */}
+                {project.stats && (
+                  <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs text-slate-400">
+                    <div className="flex items-center gap-3">
+                      {project.stats.map((st, i) => (
+                        <div key={i} className="flex items-center gap-1">
+                          <span className="text-white font-bold">{st.value}</span>
+                          <span className="text-[10px] text-slate-500">{st.label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {project.category === 'film' && (
+                      <span className="text-[11px] font-bold text-red-400 flex items-center gap-1 group-hover:text-red-300 transition">
+                        <span>Nonton</span>
+                        <Play className="w-3 h-3 fill-red-400 text-red-400" />
+                      </span>
+                    )}
+                    {project.category === 'fotografi' && (
+                      <span className="text-[11px] font-bold text-pink-400 flex items-center gap-1 group-hover:text-pink-300 transition">
+                        <span>Lihat Slide</span>
+                        <Camera className="w-3 h-3 text-pink-400" />
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
-
-            {/* Content Body */}
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-lg text-white group-hover:text-pink-400 transition">
-                    {project.title}
-                  </h3>
-                  {project.featured && (
-                    <span className="flex items-center gap-1 text-[10px] font-semibold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-full border border-yellow-400/20">
-                      <Sparkles className="w-3 h-3" />
-                      Featured
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-slate-300"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Bottom Quick Stats or Info */}
-              {project.stats && (
-                <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs text-slate-400">
-                  <div className="flex items-center gap-3">
-                    {project.stats.map((st, i) => (
-                      <div key={i} className="flex items-center gap-1">
-                        <span className="text-white font-bold">{st.value}</span>
-                        <span className="text-[10px] text-slate-500">{st.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {project.category === 'film' && (
-                    <span className="text-[11px] font-bold text-red-400 flex items-center gap-1 group-hover:text-red-300 transition">
-                      <span>Nonton</span>
-                      <Play className="w-3 h-3 fill-red-400 text-red-400" />
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Mini Cinema Player / Project Detail Modal */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fadeIn">
-          {/* Ambient Cinema Theater Glow */}
+          {/* Ambient Glow */}
           <div className={`absolute inset-0 pointer-events-none opacity-40 blur-[130px] ${
             selectedProject.category === 'film'
               ? 'bg-gradient-to-b from-red-600 via-amber-600 to-purple-900'
+              : selectedProject.category === 'fotografi'
+              ? 'bg-gradient-to-b from-pink-600 via-rose-600 to-amber-900'
               : 'bg-gradient-to-b from-cyan-600 via-purple-600 to-pink-900'
           }`} />
 
@@ -203,20 +290,31 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                 setSelectedProject(null);
                 sounds.playClick();
               }}
-              className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition cursor-pointer z-20"
+              className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition cursor-pointer z-30"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Cinema Header */}
+            {/* Header Tags */}
             {selectedProject.category === 'film' && (
               <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10 text-xs font-mono text-red-300">
                 <Clapperboard className="w-4 h-4 text-red-400 animate-pulse" />
                 <span className="uppercase tracking-widest font-bold">Cinema Mode • SMANTINEMA Productions</span>
               </div>
             )}
+            {selectedProject.category === 'fotografi' && (
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10 text-xs font-mono text-pink-300 pr-10">
+                <div className="flex items-center gap-2">
+                  <Camera className="w-4 h-4 text-pink-400 animate-pulse" />
+                  <span className="uppercase tracking-widest font-bold">Galeri Karya Fotografi • History Fair 2022</span>
+                </div>
+                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-pink-500/20 border border-pink-500/40 text-[11px] text-pink-300 font-bold">
+                  2 Slide Interaktif
+                </span>
+              </div>
+            )}
 
-            {/* Modal Media: Responsive YouTube Player Embed or Image */}
+            {/* Modal Media: Responsive YouTube Player Embed OR Multi-Slide Viewer OR Image */}
             {selectedProject.youtubeId ? (
               <div className="relative aspect-video rounded-2xl overflow-hidden mb-5 bg-black border-2 border-red-500/30 shadow-[0_0_50px_rgba(239,68,68,0.25)]">
                 <iframe
@@ -226,6 +324,108 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
+              </div>
+            ) : selectedProject.slides && selectedProject.slides.length > 1 ? (
+              <div className="mb-5 space-y-3">
+                {/* Main Slide Stage */}
+                <div className="relative rounded-2xl overflow-hidden bg-slate-950 border-2 border-pink-500/30 shadow-[0_0_50px_rgba(236,72,153,0.2)] flex items-center justify-center min-h-[300px] sm:min-h-[420px] max-h-[480px]">
+                  <img
+                    src={selectedProject.slides[modalSlideIndex].image}
+                    alt={selectedProject.slides[modalSlideIndex].caption || selectedProject.title}
+                    className="max-h-[460px] w-full object-contain mx-auto transition-all duration-300 select-none"
+                  />
+
+                  {/* Prev / Next Slide Buttons */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      sounds.playClick();
+                      setModalSlideIndex(prev => (prev - 1 + selectedProject.slides!.length) % selectedProject.slides!.length);
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
+                    title="Slide Sebelumnya"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      sounds.playClick();
+                      setModalSlideIndex(prev => (prev + 1) % selectedProject.slides!.length);
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
+                    title="Slide Berikutnya"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+
+                  {/* Slide Indicator Badge */}
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/40 text-pink-300 text-xs font-mono font-bold flex items-center gap-1.5 shadow-lg z-20">
+                    <Camera className="w-3.5 h-3.5 text-pink-400" />
+                    <span>Slide {modalSlideIndex + 1} dari {selectedProject.slides.length}</span>
+                  </div>
+
+                  {/* Quick Link to Instagram on current slide */}
+                  {selectedProject.slides[modalSlideIndex].instagramUrl && (
+                    <a
+                      href={selectedProject.slides[modalSlideIndex].instagramUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="absolute top-3 right-14 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:scale-105 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg backdrop-blur-md transition z-20"
+                    >
+                      <InstagramIcon className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Buka di Instagram</span>
+                    </a>
+                  )}
+
+                  {/* Caption Overlay */}
+                  <div className="absolute bottom-0 inset-x-0 p-3.5 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent">
+                    <p className="text-sm font-bold text-white">
+                      {selectedProject.slides[modalSlideIndex].caption}
+                    </p>
+                    {selectedProject.slides[modalSlideIndex].subtitle && (
+                      <p className="text-xs text-pink-300 font-mono mt-0.5">
+                        {selectedProject.slides[modalSlideIndex].subtitle}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* 2 Slide Selectors / Tabs */}
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  {selectedProject.slides.map((slide, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        sounds.playClick();
+                        setModalSlideIndex(idx);
+                      }}
+                      className={`p-2.5 rounded-2xl border text-left transition-all flex items-center gap-3 cursor-pointer ${
+                        modalSlideIndex === idx
+                          ? 'bg-pink-500/20 border-pink-500/60 shadow-lg shadow-pink-500/10 scale-[1.02]'
+                          : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08]'
+                      }`}
+                    >
+                      <img
+                        src={slide.image}
+                        alt={slide.caption}
+                        className="w-12 h-12 object-cover rounded-xl shrink-0 border border-white/10"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <span className={`text-xs font-bold block truncate ${
+                          modalSlideIndex === idx ? 'text-pink-300' : 'text-slate-200'
+                        }`}>
+                          {idx === 0 ? 'Foto 1: Juara Harapan' : 'Foto 2: Penenun Baduy'}
+                        </span>
+                        <span className="text-[11px] text-slate-400 block truncate mt-0.5">
+                          {idx === 0 ? 'Pengumuman Resmi Lomba' : 'Karya Peserta No. 23'}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="h-60 rounded-2xl overflow-hidden mb-5 relative border border-white/10">
@@ -253,7 +453,7 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                   <h3 className="text-2xl font-extrabold text-white">
                     {selectedProject.title}
                   </h3>
-                  <span className="text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-500/20 to-amber-500/20 border border-amber-500/30 text-amber-300">
+                  <span className="text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500/20 to-amber-500/20 border border-pink-500/30 text-pink-300">
                     {selectedProject.tagline}
                   </span>
                 </div>
@@ -264,7 +464,11 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
 
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                  {selectedProject.category === 'film' ? '🎬 Kredit & Peran Produksi' : '⚡ Teknologi yang Digunakan'}
+                  {selectedProject.category === 'film' 
+                    ? '🎬 Kredit & Peran Produksi' 
+                    : selectedProject.category === 'fotografi'
+                    ? '📸 Informasi & Kategori'
+                    : '⚡ Teknologi yang Digunakan'}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.tags.map((t) => (
@@ -298,6 +502,21 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                         <span>Pemutaran video YouTube interaktif kualitas Full HD langsung di website</span>
                       </div>
                     </>
+                  ) : selectedProject.category === 'fotografi' ? (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                        <span>Juara Harapan 1 Lomba Fotografi Tingkat Nasional History Fair 2022 (UNSRI)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span>Karya orisinal mengangkat budaya lokal penenun kain tradisional suku Baduy, Lebak - Banten</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span>Terdokumentasi dan diumumkan resmi melalui akun Instagram @historyfairunsri & @himapes_fkipunsri</span>
+                      </div>
+                    </>
                   ) : (
                     <>
                       <div className="flex items-center gap-2">
@@ -314,7 +533,7 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
               </div>
 
               {/* Action Buttons in Modal */}
-              <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+              <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
                 {selectedProject.youtubeId ? (
                   <a
                     href={selectedProject.demoUrl || `https://youtu.be/${selectedProject.youtubeId}`}
@@ -326,6 +545,31 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                     <Play className="w-4 h-4 fill-white text-white" />
                     <span>Buka Tautan YouTube Asli</span>
                   </a>
+                ) : selectedProject.category === 'fotografi' && selectedProject.slides ? (
+                  <>
+                    <a
+                      href={selectedProject.slides[0].instagramUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
+                    >
+                      <InstagramIcon className="w-4 h-4" />
+                      <span>Instagram: Pengumuman Juara</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={selectedProject.slides[1].instagramUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
+                    >
+                      <InstagramIcon className="w-4 h-4" />
+                      <span>Instagram: Karya Foto Baduy</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </>
                 ) : selectedProject.demoUrl && (
                   <a
                     href={selectedProject.demoUrl}

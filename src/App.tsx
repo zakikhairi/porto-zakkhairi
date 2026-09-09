@@ -61,7 +61,8 @@ export function App() {
         const parsed: Project[] = JSON.parse(saved);
         const hasFilms = parsed.some(p => p.id && p.id.startsWith('film-'));
         const hasRepos = parsed.some(p => p.id && p.id.startsWith('repo-'));
-        if (!hasFilms || !hasRepos) {
+        const hasPhoto = parsed.some(p => p.category === 'fotografi' || p.id === 'foto-history-fair-2022');
+        if (!hasFilms || !hasRepos || !hasPhoto) {
           return initialProjects;
         }
         return parsed;

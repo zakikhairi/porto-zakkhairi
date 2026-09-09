@@ -141,6 +141,43 @@ export const initialProjects: Project[] = [
     ]
   },
   {
+    id: "foto-history-fair-2022",
+    title: "Penenun Baduy - History Fair 2022",
+    tagline: "Juara Harapan 1 Lomba Fotografi Nasional",
+    description: "Karya fotografi dokumenter budaya yang mengabadikan potret autentik seorang wanita adat Baduy yang sedang menenun kain tradisional di rumah panggung khas Baduy. Berhasil meraih Juara Harapan 1 pada Lomba Fotografi Tingkat Nasional History Fair 2022 yang diselenggarakan oleh HIMAPES FKIP Universitas Sriwijaya (UNSRI).",
+    tags: ["Juara Harapan 1", "Fotografi Nasional", "Budaya Baduy", "Kearifan Lokal", "Tenun Baduy", "UNSRI"],
+    category: "fotografi",
+    image: "/projects/lomba-fotografi-award.png",
+    images: [
+      "/projects/lomba-fotografi-award.png",
+      "/projects/lomba-fotografi-baduy.jpg"
+    ],
+    slides: [
+      {
+        image: "/projects/lomba-fotografi-award.png",
+        caption: "Pengumuman Juara Harapan 1 Lomba Fotografi",
+        subtitle: "History Fair 2022 • HIMAPES FKIP Universitas Sriwijaya",
+        instagramUrl: "https://www.instagram.com/p/CkzfRmevkCT/?img_index=4&stkn=MXF5a2pnZ2N1YW1seQ=="
+      },
+      {
+        image: "/projects/lomba-fotografi-baduy.jpg",
+        caption: "Karya Fotografi Peserta No. 23: Penenun Tradisional Baduy",
+        subtitle: "Karya M. Zaki Khairi (SMAN 3 Rangkasbitung)",
+        instagramUrl: "https://www.instagram.com/p/Ckaiz1hv_EU/?stkn=MXJqODJhc2V3Z2RsMA=="
+      }
+    ],
+    demoUrl: "https://www.instagram.com/p/CkzfRmevkCT/?img_index=4&stkn=MXF5a2pnZ2N1YW1seQ==",
+    instagramUrl: "https://www.instagram.com/p/CkzfRmevkCT/?img_index=4&stkn=MXF5a2pnZ2N1YW1seQ==",
+    featured: true,
+    color: "#ec4899",
+    gradient: "from-pink-500 via-rose-500 to-amber-500",
+    stats: [
+      { label: "Prestasi", value: "Juara Harapan 1" },
+      { label: "Tingkat", value: "Nasional" },
+      { label: "Slide", value: "2 Foto" }
+    ]
+  },
+  {
     id: "repo-kai-finder",
     title: "KAI Finder",
     tagline: "Pencari Jadwal & Tiket Kereta Api Indonesia",

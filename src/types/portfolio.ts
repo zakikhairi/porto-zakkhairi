@@ -1,13 +1,23 @@
+export interface ProjectSlide {
+  image: string;
+  caption?: string;
+  subtitle?: string;
+  instagramUrl?: string;
+}
+
 export interface Project {
   id: string;
   title: string;
   tagline: string;
   description: string;
   tags: string[];
-  category: 'film' | 'web' | 'mobile' | 'ai' | 'fullstack';
+  category: 'film' | 'web' | 'mobile' | 'ai' | 'fullstack' | 'fotografi';
   image: string;
+  images?: string[];
+  slides?: ProjectSlide[];
   demoUrl?: string;
   githubUrl?: string;
+  instagramUrl?: string;
   youtubeId?: string;
   featured?: boolean;
   color: string;

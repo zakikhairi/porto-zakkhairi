@@ -158,6 +158,44 @@ class SoundController {
       // Audio handling
     }
   }
+
+  // Mechanical camera shutter sound for photography
+  playCameraShutter() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      // Click 1 (shutter opening)
+      const osc1 = this.ctx.createOscillator();
+      const gain1 = this.ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(1400, now);
+      osc1.frequency.exponentialRampToValueAtTime(300, now + 0.04);
+      gain1.gain.setValueAtTime(0.12, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc1.connect(gain1);
+      gain1.connect(this.ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.04);
+
+      // Click 2 (shutter curtain closing)
+      const osc2 = this.ctx.createOscillator();
+      const gain2 = this.ctx.createGain();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(900, now + 0.07);
+      osc2.frequency.exponentialRampToValueAtTime(200, now + 0.12);
+      gain2.gain.setValueAtTime(0.15, now + 0.07);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc2.connect(gain2);
+      gain2.connect(this.ctx.destination);
+      osc2.start(now + 0.07);
+      osc2.stop(now + 0.12);
+    } catch {
+      // Audio handling
+    }
+  }
 }
 
 export const sounds = new SoundController();
