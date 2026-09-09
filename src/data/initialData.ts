@@ -10,7 +10,7 @@ export const initialProfile: ProfileData = {
   location: "Rangkasbitung - Lebak, Banten 🇮🇩",
   email: "muhammadzakikhairi19@gmail.com",
   phone: "081919200602",
-  avatarUrl: "/profile.jpg",
+  avatarUrl: "/profile.jpg?v=2",
   socials: {
     github: "https://github.com/zakikhairi",
     tiktok: "https://www.tiktok.com/@_iniizaki",
