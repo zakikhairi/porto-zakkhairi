@@ -188,15 +188,15 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
     }
   };
 
-  // String physics curve calculation
+  // String physics curve calculation - 1:1 synchronized with card translation
   const anchorX = 140;
-  const cardTopX = anchorX + pos.x * 0.8;
-  const cardTopY = 70 + pos.y * 0.8;
+  const cardTopX = anchorX + pos.x;
+  const cardTopY = 70 + pos.y;
 
   return (
     <div className="relative flex flex-col items-center justify-center select-none w-full max-w-[350px] mx-auto py-1">
-      {/* SVG Lanyard Strap & Clip */}
-      <svg className="w-full h-18 overflow-visible pointer-events-none" viewBox="0 0 280 80">
+      {/* SVG Lanyard Strap & Clasp (Renders physically clamped over the card) */}
+      <svg className="w-full h-20 overflow-visible pointer-events-none z-20 relative" viewBox="0 0 280 85">
         <defs>
           <linearGradient id="lanyardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#8b5cf6" />
@@ -213,11 +213,11 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
         </defs>
 
         {/* Lanyard Top Anchor Loop */}
-        <circle cx={anchorX} cy="6" r="6" fill="#475569" stroke="#94a3b8" strokeWidth="2" />
+        <circle cx={anchorX} cy="4" r="6" fill="#334155" stroke="#94a3b8" strokeWidth="2" />
         
-        {/* Dynamic Curved Ribbon */}
+        {/* Dynamic Curved Ribbon (Stretches fluidly from anchor to clasp) */}
         <path
-          d={`M ${anchorX - 10} 6 Q ${anchorX - 5 + pos.x * 0.4} ${35 + pos.y * 0.4} ${cardTopX - 6} ${cardTopY - 14}`}
+          d={`M ${anchorX - 12} 4 Q ${anchorX - 6 + pos.x * 0.35} ${36 + pos.y * 0.35} ${cardTopX - 6} ${cardTopY - 14}`}
           fill="none"
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
@@ -225,7 +225,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           filter="url(#glow)"
         />
         <path
-          d={`M ${anchorX + 10} 6 Q ${anchorX + 5 + pos.x * 0.4} ${35 + pos.y * 0.4} ${cardTopX + 6} ${cardTopY - 14}`}
+          d={`M ${anchorX + 12} 4 Q ${anchorX + 6 + pos.x * 0.35} ${36 + pos.y * 0.35} ${cardTopX + 6} ${cardTopY - 14}`}
           fill="none"
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
@@ -233,26 +233,51 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           filter="url(#glow)"
         />
 
-        {/* Metallic Clip & Ring */}
+        {/* Metallic Ribbon Clamp / Buckle */}
         <rect
-          x={cardTopX - 10}
-          y={cardTopY - 14}
-          width="20"
-          height="14"
-          rx="3"
-          fill="#cbd5e1"
+          x={cardTopX - 9}
+          y={cardTopY - 15}
+          width="18"
+          height="6"
+          rx="2"
+          fill="#e2e8f0"
           stroke="#475569"
-          strokeWidth="1.5"
+          strokeWidth="1"
         />
+
+        {/* Swivel Ring */}
         <circle
           cx={cardTopX}
-          cy={cardTopY}
+          cy={cardTopY - 6}
           r="4"
-          fill="#94a3b8"
+          fill="#64748b"
+          stroke="#cbd5e1"
+          strokeWidth="1.5"
+        />
+
+        {/* Metallic Lobster Claw / Clasp Hook that physically clamps onto the card */}
+        <rect
+          x={cardTopX - 6}
+          y={cardTopY - 3}
+          width="12"
+          height="15"
+          rx="3"
+          fill="#cbd5e1"
+          stroke="#334155"
+          strokeWidth="1.5"
+        />
+        {/* Clasp Tongue Accent */}
+        <rect
+          x={cardTopX - 2.5}
+          y={cardTopY + 1}
+          width="5"
+          height="8"
+          rx="1"
+          fill="#475569"
         />
       </svg>
 
-      {/* 3D Draggable Card Container (Comfortable, Prominent & Proportional) */}
+      {/* 3D Draggable Card Container - Clamped seamlessly into the lanyard clasp */}
       <div
         ref={cardRef}
         onMouseDown={onMouseDown}
@@ -260,13 +285,14 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
         onDragStart={(e) => e.preventDefault()}
         style={{
           transform: `translate3d(${pos.x}px, ${pos.y}px, 0px) rotateX(${rot.x}deg) rotateY(${rot.y + (isFlipped ? 180 : 0)}deg) rotateZ(${rot.z}deg)`,
+          transformOrigin: 'top center',
           transformStyle: 'preserve-3d',
           transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
           cursor: isDragging ? 'grabbing' : 'grab',
           WebkitUserDrag: 'none',
           userSelect: 'none'
         } as React.CSSProperties}
-        className="relative w-[275px] h-[395px] sm:w-[290px] sm:h-[410px] rounded-3xl p-1 shadow-2xl transition-shadow select-none touch-none"
+        className="relative -mt-4 w-[275px] h-[395px] sm:w-[290px] sm:h-[410px] rounded-3xl p-1 shadow-2xl transition-shadow select-none touch-none z-10"
       >
         {/* Glowing Ambient Halo (pointer-events-none, calmed when flipped for readability) */}
         <div 
@@ -307,6 +333,11 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
               <span className="text-[11px] font-semibold tracking-wider text-emerald-400 uppercase">
                 Open to Work
               </span>
+            </div>
+
+            {/* Badge Punch Slot Hole */}
+            <div className="w-8 h-2 rounded-full bg-slate-950/90 border border-white/20 shadow-inner flex items-center justify-center pointer-events-none">
+              <div className="w-3.5 h-0.5 rounded-full bg-slate-700" />
             </div>
 
             <div className="flex items-center space-x-1">
@@ -472,6 +503,12 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
                 DIGITAL PASS
               </span>
             </div>
+
+            {/* Badge Punch Slot Hole */}
+            <div className="w-8 h-2 rounded-full bg-slate-950/90 border border-white/20 shadow-inner flex items-center justify-center pointer-events-none">
+              <div className="w-3.5 h-0.5 rounded-full bg-slate-700" />
+            </div>
+
             <button
               type="button"
               onClick={handleFlip}
