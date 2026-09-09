@@ -1,0 +1,377 @@
+import type { ProfileData, Project, Skill, GuestbookEntry, ThemeConfig, ThemeKey, EducationItem, ExperienceItem } from '../types/portfolio';
+
+export const initialProfile: ProfileData = {
+  name: "Muhammad Zaki Khairi",
+  handle: "@zakikhairi",
+  role: "S1 Sistem Informasi Gunadarma • Film Director & Creative Media",
+  headline: "S1 Sistem Informasi Gunadarma • Film Director, Producer & Creative Media",
+  bio: "Mahasiswa S1 Sistem Informasi Universitas Gunadarma (IPK 3,75) dengan fokus pada teknologi informasi, media kreatif, dan visual branding. Sutradara film 'TANAH JAWARA', Produser Juara 1 'PLUS MINUS' (SMANTINEMA), serta Wakil Ketua Creative Media Lebak Expo University.",
+  status: "🟢 Available for Film, Creative & Tech Projects",
+  location: "Rangkasbitung - Lebak, Banten 🇮🇩",
+  email: "muhammadzakikhairi19@gmail.com",
+  phone: "081919200602",
+  avatarUrl: "/profile.jpg",
+  socials: {
+    github: "https://github.com/zakikhairi",
+    tiktok: "https://www.tiktok.com/@_iniizaki",
+    instagram: "https://www.instagram.com/zakkhairi_/",
+    youtube: "https://www.youtube.com/@zakkhairi",
+    linkedin: "https://linkedin.com/in/zakikhairi",
+    twitter: "https://x.com/zakikhairi"
+  },
+  stats: {
+    projectsCount: 18,
+    yearsExperience: 3,
+    satisfiedClients: 25,
+    codeCommits: 850,
+    gpa: "3.75"
+  }
+};
+
+export const initialEducation: EducationItem[] = [
+  {
+    id: "edu-gunadarma",
+    institution: "Universitas Gunadarma",
+    degree: "S1 Sistem Informasi",
+    period: "Jan 2024 - Sekarang",
+    score: "3,75",
+    scoreLabel: "IPK",
+    description: "Mendalami teknologi informasi, arsitektur sistem informasi, rekayasa data cerdas, dan pemrograman terstruktur dengan performa akademik unggul.",
+    relevantCourses: [
+      "Komputasi Big Data",
+      "Teknologi Kecerdasan Artifisial",
+      "Sistem Basis Data 1",
+      "Teknik Pemrograman Terstruktur",
+      "Konsep Sistem dan Teknologi Sistem Informasi"
+    ]
+  },
+  {
+    id: "edu-sman3",
+    institution: "SMAN 3 Rangkasbitung",
+    degree: "Jurusan MIPA (Ilmu Pengetahuan Alam)",
+    period: "2021 - 2024",
+    score: "88",
+    scoreLabel: "Nilai Rata-rata",
+    description: "Lulusan MIPA berprestasi, aktif memimpin komunitas sinematografi SMANTINEMA, memproduksi karya film fiksi dan dokumenter peraih Juara 1 Tingkat Provinsi."
+  }
+];
+
+export const initialExperience: ExperienceItem[] = [
+  {
+    id: "exp-lebak-wakil",
+    role: "Wakil Ketua Creative Media",
+    organization: "Lebak Expo University",
+    period: "Agu 2025 - Jan 2026",
+    badge: "Leadership & Branding",
+    description: "Memimpin strategi komunikasi visual, kampanye digital terpadu, dan supervisi produksi konten kreatif acara expo universitas terbesar di Kabupaten Lebak.",
+    responsibilities: [
+      "Bertanggung jawab dalam merancang konsep kreatif, visual branding, dan aset desain untuk kebutuhan publikasi cetak maupun digital di media sosial.",
+      "Memproduksi konten multimedia kreatif seperti video promosi, reels, dan materi visual interaktif guna mendongkrak jangkauan (reach) informasi acara.",
+      "Menyusun strategi konten penyiaran dan berkolaborasi secara intensif bersama divisi lain untuk menyelaraskan publikasi kampanye kreatif."
+    ]
+  },
+  {
+    id: "exp-lebak-anggota",
+    role: "Anggota Creative Media",
+    organization: "Lebak Expo University",
+    period: "Sep 2024 - Jan 2025",
+    badge: "Content Strategy & Design",
+    description: "Berperan aktif dalam perencanaan publikasi terstruktur, kurasi materi visual, serta eksekusi desain grafis sosial media.",
+    responsibilities: [
+      "Bertanggung jawab dalam merancang konsep kreatif, visual branding, dan aset desain untuk kebutuhan publikasi cetak maupun digital di media sosial Lebak Expo University.",
+      "Menyusun strategi konten dan mengelola aset media sosial resmi, termasuk pembuatan content planner bulanan agar publikasi berjalan secara konsisten dan terstruktur.",
+      "Bekerjasama dengan divisi internal (seperti Humas atau Acara) untuk menyelaraskan pesan komunikasi korporat ke dalam bentuk media visual yang interaktif dan mudah dipahami publik."
+    ]
+  }
+];
+
+export const initialProjects: Project[] = [
+  {
+    id: "film-plus-minus",
+    title: "PLUS MINUS",
+    tagline: "Juara 1 Film Pendek Tingkat Provinsi • Producer",
+    description: "Juara 1 Film Pendek Bertema Pendidikan Siswa SMA tingkat Provinsi. Menampilkan narasi mendalam tentang dinamika dunia pendidikan, perjuangan belajar, dan persahabatan generasi muda. Diproduseri langsung oleh Muhammad Zaki Khairi bersama tim SMANTINEMA.",
+    tags: ["Producer", "Juara 1 Provinsi", "Short Film", "SMANTINEMA", "Education"],
+    category: "film",
+    image: "https://i.ytimg.com/vi/pmeBmZwUYU0/hqdefault.jpg",
+    demoUrl: "https://youtu.be/pmeBmZwUYU0",
+    youtubeId: "pmeBmZwUYU0",
+    featured: true,
+    color: "#eab308",
+    gradient: "from-amber-500 via-yellow-500 to-orange-500",
+    stats: [
+      { label: "Prestasi", value: "Juara 1" },
+      { label: "Peran", value: "Producer" }
+    ]
+  },
+  {
+    id: "film-tanah-jawara",
+    title: "TANAH JAWARA",
+    tagline: "Film Pendek Sutradara • Director",
+    description: "Karya film pendek fiksi penuh ketegangan dan kearifan lokal Banten yang diproduksi bersama SMANTINEMA SMAN 3 Rangkasbitung. Disutradarai langsung oleh Muhammad Zaki Khairi dengan fokus pada dinamika karakter, sinematografi atmosferik, dan pesan moral yang kuat.",
+    tags: ["Director", "Short Film", "SMANTINEMA", "Cinematography", "Action/Drama"],
+    category: "film",
+    image: "https://i.ytimg.com/vi/02M2IBbGUXU/hqdefault.jpg",
+    demoUrl: "https://youtu.be/02M2IBbGUXU",
+    youtubeId: "02M2IBbGUXU",
+    featured: true,
+    color: "#f43f5e",
+    gradient: "from-red-600 via-rose-500 to-amber-500",
+    stats: [
+      { label: "Peran", value: "Director" },
+      { label: "Format", value: "Short Film" }
+    ]
+  },
+  {
+    id: "film-dokumentasi-terakhir",
+    title: "Dokumentasi Terakhir - Anderpati 30",
+    tagline: "Film Dokumenter & Sinema Perpisahan • Producer",
+    description: "Karya sinematik dokumenter emosional yang mengabadikan memori, kebersamaan, dan momentum bersejarah generasi Anderpati 30 SMAN 3 Rangkasbitung. Muhammad Zaki Khairi memimpin jalannya seluruh manajemen pra hingga pasca produksi sebagai Produser.",
+    tags: ["Producer", "Dokumenter", "Anderpati 30", "SMANTINEMA", "Production"],
+    category: "film",
+    image: "https://i.ytimg.com/vi/UzfRLkaq93E/hqdefault.jpg",
+    demoUrl: "https://youtu.be/UzfRLkaq93E",
+    youtubeId: "UzfRLkaq93E",
+    featured: true,
+    color: "#8b5cf6",
+    gradient: "from-purple-600 via-indigo-500 to-pink-500",
+    stats: [
+      { label: "Peran", value: "Producer" },
+      { label: "Genre", value: "Dokumenter" }
+    ]
+  },
+  {
+    id: "repo-kai-finder",
+    title: "KAI Finder",
+    tagline: "Pencari Jadwal & Tiket Kereta Api Indonesia",
+    description: "Aplikasi penelusuran jadwal, rute, dan ketersediaan perjalanan Kereta Api Indonesia (KAI) yang cepat, praktis, dan responsif.",
+    tags: ["JavaScript", "Web App", "API Integration", "Transit"],
+    category: "web",
+    image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://github.com/zakikhairi/kai-finder",
+    githubUrl: "https://github.com/zakikhairi/kai-finder",
+    featured: true,
+    color: "#0284c7",
+    gradient: "from-sky-500 via-blue-600 to-indigo-600",
+    stats: [
+      { label: "Bahasa", value: "JavaScript" },
+      { label: "Platform", value: "Web" }
+    ]
+  },
+  {
+    id: "repo-ppdb1",
+    title: "PPDB Online System",
+    tagline: "Sistem Penerimaan Peserta Didik Baru",
+    description: "Platform pendaftaran dan seleksi peserta didik baru berbasis TypeScript dengan validasi data formulir, tracking status berkas, dan dashboard administrasi sekolah.",
+    tags: ["TypeScript", "Fullstack", "School Admission", "Web System"],
+    category: "fullstack",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://github.com/zakikhairi/ppdb1",
+    githubUrl: "https://github.com/zakikhairi/ppdb1",
+    featured: true,
+    color: "#10b981",
+    gradient: "from-emerald-500 via-teal-600 to-cyan-600",
+    stats: [
+      { label: "Bahasa", value: "TypeScript" },
+      { label: "Modul", value: "Fullstack" }
+    ]
+  },
+  {
+    id: "repo-ticzi",
+    title: "Ticzi",
+    tagline: "Interactive TypeScript Application",
+    description: "Aplikasi web interaktif modern yang dibangun dengan TypeScript, mengutamakan performa responsif, modularitas komponen, dan antarmuka dinamis.",
+    tags: ["TypeScript", "Interactive UI", "State Management", "Modern Web"],
+    category: "web",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://github.com/zakikhairi/Ticzi",
+    githubUrl: "https://github.com/zakikhairi/Ticzi",
+    featured: false,
+    color: "#8b5cf6",
+    gradient: "from-purple-600 via-pink-500 to-indigo-600",
+    stats: [
+      { label: "Stack", value: "TypeScript" },
+      { label: "UI", value: "Reactive" }
+    ]
+  },
+  {
+    id: "repo-analisis-grafik",
+    title: "Analisis Grafik & Data",
+    tagline: "Data Analytics & Chart Visualizer",
+    description: "Program pemrosesan data statistik dan pembuatan visualisasi grafik menggunakan Python untuk analisis tren, agregasi metrik, dan penyajian data informatif.",
+    tags: ["Python", "Data Analysis", "Matplotlib", "Data Science"],
+    category: "ai",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://github.com/zakikhairi/AnalisisGrafik",
+    githubUrl: "https://github.com/zakikhairi/AnalisisGrafik",
+    featured: false,
+    color: "#f59e0b",
+    gradient: "from-amber-400 via-orange-500 to-rose-500",
+    stats: [
+      { label: "Core", value: "Python" },
+      { label: "Data", value: "Analytics" }
+    ]
+  },
+  {
+    id: "repo-recipe-menu",
+    title: "Recipe Menu App",
+    tagline: "Katalog Resep & Rekomendasi Kuliner",
+    description: "Aplikasi katalog menu makanan dan rekomendasi resep masakan berbasis Python untuk mempermudah pencarian resep, panduan memasak, dan inspirasi menu harian.",
+    tags: ["Python", "Catalog", "Food Tech", "Menu System"],
+    category: "fullstack",
+    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://github.com/zakikhairi/recipe-menu",
+    githubUrl: "https://github.com/zakikhairi/recipe-menu",
+    featured: false,
+    color: "#ec4899",
+    gradient: "from-pink-500 via-rose-500 to-yellow-500",
+    stats: [
+      { label: "Language", value: "Python" },
+      { label: "Kategori", value: "Culinary" }
+    ]
+  },
+  {
+    id: "proj-5",
+    title: "OmniPay Mobile Experience",
+    tagline: "Fintech App with Micro-animations",
+    description: "Konsep aplikasi dompet digital modern dengan interaksi gestur mulus, kartu virtual 3D hologram, dan analitik pengeluaran warna-warni.",
+    tags: ["React Native", "Expo", "TypeScript", "Reanimated"],
+    category: "mobile",
+    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://example.com/omnipay",
+    githubUrl: "https://github.com",
+    featured: false,
+    color: "#10b981",
+    gradient: "from-emerald-400 via-green-500 to-teal-600",
+    stats: [
+      { label: "Downloads", value: "50k+" },
+      { label: "Rating", value: "4.9 ★" }
+    ]
+  },
+  {
+    id: "proj-6",
+    title: "HyperTune Audio Visualizer",
+    tagline: "Lo-Fi Web Player with Spectrum Shader",
+    description: "Music player web interaktif dengan visualisasi gelombang spektrum frekuensi audio 3D, preset equalizer, dan ambient background.",
+    tags: ["Web Audio API", "Canvas", "React", "CSS Houdini"],
+    category: "web",
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80",
+    demoUrl: "https://example.com/hypertune",
+    githubUrl: "https://github.com",
+    featured: false,
+    color: "#6366f1",
+    gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    stats: [
+      { label: "Tracks", value: "500+" },
+      { label: "Audio", value: "Hi-Res" }
+    ]
+  }
+];
+
+export const initialSkills: Skill[] = [
+  { name: "Canva & Visual Branding", category: "Design/Tools", level: 95, iconName: "Palette", color: "#ec4899" },
+  { name: "Social Media Management", category: "Design/Tools", level: 94, iconName: "Sparkles", color: "#f43f5e" },
+  { name: "Python / Data Science", category: "AI & Cloud", level: 86, iconName: "Cpu", color: "#eab308" },
+  { name: "Big Data & Artificial Intelligence", category: "AI & Cloud", level: 84, iconName: "Cpu", color: "#a855f7" },
+  { name: "Sistem Basis Data (SQL)", category: "Backend", level: 88, iconName: "Database", color: "#6366f1" },
+  { name: "Pemrograman Terstruktur", category: "Backend", level: 87, iconName: "Server", color: "#22c55e" },
+  { name: "React & TypeScript", category: "Frontend", level: 92, iconName: "Code2", color: "#06b6d4" },
+  { name: "Tailwind CSS & UI Web", category: "Frontend", level: 95, iconName: "Layout", color: "#38bdf8" },
+  { name: "Microsoft Office & Google Workspace", category: "Design/Tools", level: 92, iconName: "Layers", color: "#0ea5e9" },
+  { name: "Team Coordination & Leadership", category: "Design/Tools", level: 96, iconName: "Award", color: "#10b981" }
+];
+
+export const initialGuestbook: GuestbookEntry[] = [
+  {
+    id: "gb-1",
+    name: "Alex Dev",
+    role: "Frontend Engineer",
+    message: "Keren banget kartunya bisa ditarik membal gitu! Animasi dan warnanya juara 🔥",
+    avatarEmoji: "🚀",
+    avatarBg: "bg-purple-500",
+    timestamp: "2 jam yang lalu",
+    likes: 24,
+    likedByMe: true
+  },
+  {
+    id: "gb-2",
+    name: "Sarah L.",
+    role: "Product Designer",
+    message: "Desain bento grid dan perpaduan neon glassmorphism-nya sangat estetik! Sangat inspiratif ✨",
+    avatarEmoji: "🎨",
+    avatarBg: "bg-pink-500",
+    timestamp: "5 jam yang lalu",
+    likes: 18,
+    likedByMe: false
+  },
+  {
+    id: "gb-3",
+    name: "Budi Santoso",
+    role: "Fullstack Dev",
+    message: "Portofolio paling colorful & interaktif yang pernah gw lihat minggu ini. Good job bang!",
+    avatarEmoji: "⚡",
+    avatarBg: "bg-cyan-500",
+    timestamp: "1 hari yang lalu",
+    likes: 42,
+    likedByMe: true
+  },
+  {
+    id: "gb-4",
+    name: "Rian Tech",
+    role: "Student & Explorer",
+    message: "Tutor lanyard 3D-nya dong bang! Smooth banget di mobile maupun desktop 👏",
+    avatarEmoji: "💻",
+    avatarBg: "bg-emerald-500",
+    timestamp: "2 hari yang lalu",
+    likes: 31,
+    likedByMe: false
+  }
+];
+
+export const themes: Record<ThemeKey, ThemeConfig> = {
+  cyberpunk: {
+    name: "Cyberpunk Neon",
+    primary: "#ec4899",
+    secondary: "#06b6d4",
+    accent: "#a855f7",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(236,72,153,0.25), rgba(6,182,212,0.15), rgba(10,12,22,1))",
+    glowColor: "rgba(236,72,153,0.4)",
+    badgeBg: "from-pink-500 to-cyan-500"
+  },
+  sunset: {
+    name: "Sunset Vibes",
+    primary: "#f97316",
+    secondary: "#f43f5e",
+    accent: "#fbbf24",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(249,115,22,0.25), rgba(244,63,94,0.18), rgba(10,12,22,1))",
+    glowColor: "rgba(249,115,22,0.4)",
+    badgeBg: "from-orange-500 to-rose-500"
+  },
+  emerald: {
+    name: "Aurora Emerald",
+    primary: "#10b981",
+    secondary: "#06b6d4",
+    accent: "#84cc16",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(16,185,129,0.25), rgba(6,182,212,0.18), rgba(10,12,22,1))",
+    glowColor: "rgba(16,185,129,0.4)",
+    badgeBg: "from-emerald-500 to-cyan-500"
+  },
+  violet: {
+    name: "Electric Violet",
+    primary: "#8b5cf6",
+    secondary: "#d946ef",
+    accent: "#3b82f6",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(139,92,246,0.3), rgba(217,70,239,0.18), rgba(10,12,22,1))",
+    glowColor: "rgba(139,92,246,0.4)",
+    badgeBg: "from-violet-500 to-fuchsia-500"
+  },
+  ocean: {
+    name: "Ocean Breeze",
+    primary: "#0284c7",
+    secondary: "#14b8a6",
+    accent: "#6366f1",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(2,132,199,0.25), rgba(20,184,166,0.18), rgba(10,12,22,1))",
+    glowColor: "rgba(2,132,199,0.4)",
+    badgeBg: "from-sky-500 to-teal-500"
+  }
+};
