@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ExternalLink, Sparkles, FolderGit2, X, CheckCircle2, Play, Clapperboard, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Project } from '../types/portfolio';
 import { GithubIcon } from './icons/GithubIcon';
@@ -14,6 +14,26 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [cardSlideIndex, setCardSlideIndex] = useState<{ [projectId: string]: number }>({});
   const [modalSlideIndex, setModalSlideIndex] = useState<number>(0);
+
+  // Keyboard Escape listener & body scroll lock when modal is open
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProject) {
+        setSelectedProject(null);
+        sounds.playClick();
+      }
+    };
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedProject]);
 
   const filters = [
     { id: 'all', label: 'Semua Karya' },
@@ -273,7 +293,15 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
 
       {/* Mini Cinema Player / Project Detail Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fadeIn">
+        <div 
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedProject(null);
+              sounds.playClick();
+            }
+          }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-xl animate-fadeIn"
+        >
           {/* Ambient Glow */}
           <div className={`absolute inset-0 pointer-events-none opacity-40 blur-[130px] ${
             selectedProject.category === 'film'
@@ -283,317 +311,363 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
               : 'bg-gradient-to-b from-cyan-600 via-purple-600 to-pink-900'
           }`} />
 
-          <div className="relative w-full max-w-3xl rounded-3xl glass-panel border border-white/20 p-6 sm:p-7 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto z-10 bg-[#090d16]/95">
-            {/* Close Button */}
-            <button
-              onClick={() => {
-                setSelectedProject(null);
-                sounds.playClick();
-              }}
-              className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition cursor-pointer z-30"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          {/* Floating Close Button for easy access on any device */}
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedProject(null);
+              sounds.playClick();
+            }}
+            className="fixed top-3 right-3 sm:top-5 sm:right-5 z-[70] p-2.5 rounded-full bg-slate-900/90 hover:bg-rose-600 text-white border border-white/20 shadow-2xl transition hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-md flex items-center justify-center group"
+            title="Tutup Modal (Esc)"
+          >
+            <X className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+          </button>
 
-            {/* Header Tags */}
-            {selectedProject.category === 'film' && (
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10 text-xs font-mono text-red-300">
-                <Clapperboard className="w-4 h-4 text-red-400 animate-pulse" />
-                <span className="uppercase tracking-widest font-bold">Cinema Mode • SMANTINEMA Productions</span>
-              </div>
-            )}
-            {selectedProject.category === 'fotografi' && (
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10 text-xs font-mono text-pink-300 pr-10">
-                <div className="flex items-center gap-2">
-                  <Camera className="w-4 h-4 text-pink-400 animate-pulse" />
-                  <span className="uppercase tracking-widest font-bold">Galeri Karya Fotografi • History Fair 2022</span>
-                </div>
-                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-pink-500/20 border border-pink-500/40 text-[11px] text-pink-300 font-bold">
-                  2 Slide Interaktif
+          {/* Modal Dialog Card: structured with Fixed Header + Scrollable Body */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-3xl rounded-3xl glass-panel border border-white/20 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col z-10 bg-[#090d16]/98"
+          >
+            {/* Sticky/Fixed Modal Header: Always visible at the top, never scrolls away! */}
+            <div className="shrink-0 px-4 sm:px-6 py-3 bg-slate-900/95 backdrop-blur-md border-b border-white/10 flex items-center justify-between z-20">
+              <div className="flex items-center gap-2 min-w-0 pr-3">
+                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md flex items-center gap-1.5 border shrink-0 ${
+                  selectedProject.category === 'film'
+                    ? 'bg-red-950/85 border-red-500/40 text-red-300'
+                    : selectedProject.category === 'fotografi'
+                    ? 'bg-pink-950/85 border-pink-500/40 text-pink-300'
+                    : 'bg-slate-800 border-white/20 text-white'
+                }`}>
+                  {selectedProject.category === 'film' && <Clapperboard className="w-3 h-3 text-red-400" />}
+                  {selectedProject.category === 'fotografi' && <Camera className="w-3 h-3 text-pink-400" />}
+                  {selectedProject.category}
+                </span>
+                <span className="text-sm sm:text-base font-bold text-white truncate">
+                  {selectedProject.title}
                 </span>
               </div>
-            )}
 
-            {/* Modal Media: Responsive YouTube Player Embed OR Multi-Slide Viewer OR Image */}
-            {selectedProject.youtubeId ? (
-              <div className="relative aspect-video rounded-2xl overflow-hidden mb-5 bg-black border-2 border-red-500/30 shadow-[0_0_50px_rgba(239,68,68,0.25)]">
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${selectedProject.youtubeId}?autoplay=1&rel=0`}
-                  title={selectedProject.title}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : selectedProject.slides && selectedProject.slides.length > 1 ? (
-              <div className="mb-5 space-y-3">
-                {/* Main Slide Stage */}
-                <div className="relative rounded-2xl overflow-hidden bg-slate-950 border-2 border-pink-500/30 shadow-[0_0_50px_rgba(236,72,153,0.2)] flex items-center justify-center min-h-[300px] sm:min-h-[420px] max-h-[480px]">
-                  <img
-                    src={selectedProject.slides[modalSlideIndex].image}
-                    alt={selectedProject.slides[modalSlideIndex].caption || selectedProject.title}
-                    className="max-h-[460px] w-full object-contain mx-auto transition-all duration-300 select-none"
+              {/* Prominent Close Button in Header */}
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProject(null);
+                  sounds.playClick();
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/40 text-xs font-bold transition cursor-pointer shadow-md shrink-0 active:scale-95"
+                title="Tutup (Esc)"
+              >
+                <X className="w-4 h-4" />
+                <span>Tutup</span>
+              </button>
+            </div>
+
+            {/* Scrollable Body */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+              {/* Cinema Header for films */}
+              {selectedProject.category === 'film' && (
+                <div className="flex items-center gap-2 pb-1 text-xs font-mono text-red-300">
+                  <Clapperboard className="w-4 h-4 text-red-400 animate-pulse" />
+                  <span className="uppercase tracking-widest font-bold">Cinema Mode • SMANTINEMA Productions</span>
+                </div>
+              )}
+
+              {/* Modal Media: Responsive YouTube Player Embed OR Multi-Slide Viewer OR Image */}
+              {selectedProject.youtubeId ? (
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-black border-2 border-red-500/30 shadow-[0_0_50px_rgba(239,68,68,0.25)]">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${selectedProject.youtubeId}?autoplay=1&rel=0`}
+                    title={selectedProject.title}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                   />
+                </div>
+              ) : selectedProject.slides && selectedProject.slides.length > 1 ? (
+                <div className="space-y-3">
+                  {/* Main Slide Stage: Compact & Perfectly proportioned for Mobile */}
+                  <div className="relative rounded-2xl overflow-hidden bg-slate-950 border-2 border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.2)] flex items-center justify-center min-h-[220px] max-h-[300px] sm:max-h-[380px]">
+                    <img
+                      src={selectedProject.slides[modalSlideIndex].image}
+                      alt={selectedProject.slides[modalSlideIndex].caption || selectedProject.title}
+                      className="max-h-[280px] sm:max-h-[360px] w-full object-contain mx-auto transition-all duration-300 select-none"
+                    />
 
-                  {/* Prev / Next Slide Buttons */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      sounds.playClick();
-                      setModalSlideIndex(prev => (prev - 1 + selectedProject.slides!.length) % selectedProject.slides!.length);
-                    }}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
-                    title="Slide Sebelumnya"
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      sounds.playClick();
-                      setModalSlideIndex(prev => (prev + 1) % selectedProject.slides!.length);
-                    }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
-                    title="Slide Berikutnya"
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </button>
+                    {/* Prev / Next Slide Buttons */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sounds.playClick();
+                        setModalSlideIndex(prev => (prev - 1 + selectedProject.slides!.length) % selectedProject.slides!.length);
+                      }}
+                      className="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
+                      title="Slide Sebelumnya"
+                    >
+                      <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sounds.playClick();
+                        setModalSlideIndex(prev => (prev + 1) % selectedProject.slides!.length);
+                      }}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/80 hover:bg-pink-600 text-white flex items-center justify-center backdrop-blur-md border border-white/20 transition hover:scale-110 shadow-xl cursor-pointer z-20"
+                      title="Slide Berikutnya"
+                    >
+                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                    </button>
 
-                  {/* Slide Indicator Badge */}
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/40 text-pink-300 text-xs font-mono font-bold flex items-center gap-1.5 shadow-lg z-20">
-                    <Camera className="w-3.5 h-3.5 text-pink-400" />
-                    <span>Slide {modalSlideIndex + 1} dari {selectedProject.slides.length}</span>
+                    {/* Slide Indicator Badge */}
+                    <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/40 text-pink-300 text-[11px] font-mono font-bold flex items-center gap-1.5 shadow-lg z-20">
+                      <Camera className="w-3.5 h-3.5 text-pink-400" />
+                      <span>Slide {modalSlideIndex + 1}/{selectedProject.slides.length}</span>
+                    </div>
+
+                    {/* Quick Link to Instagram on current slide */}
+                    {selectedProject.slides[modalSlideIndex].instagramUrl && (
+                      <a
+                        href={selectedProject.slides[modalSlideIndex].instagramUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => sounds.playClick()}
+                        className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:scale-105 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg backdrop-blur-md transition z-20"
+                      >
+                        <InstagramIcon className="w-3.5 h-3.5" />
+                        <span>Instagram</span>
+                      </a>
+                    )}
+
+                    {/* Caption Overlay */}
+                    <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-3 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent">
+                      <p className="text-xs sm:text-sm font-bold text-white truncate">
+                        {selectedProject.slides[modalSlideIndex].caption}
+                      </p>
+                      {selectedProject.slides[modalSlideIndex].subtitle && (
+                        <p className="text-[10px] sm:text-xs text-pink-300 font-mono mt-0.5 truncate">
+                          {selectedProject.slides[modalSlideIndex].subtitle}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Quick Link to Instagram on current slide */}
-                  {selectedProject.slides[modalSlideIndex].instagramUrl && (
-                    <a
-                      href={selectedProject.slides[modalSlideIndex].instagramUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => sounds.playClick()}
-                      className="absolute top-3 right-14 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:scale-105 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg backdrop-blur-md transition z-20"
-                    >
-                      <InstagramIcon className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Buka di Instagram</span>
-                    </a>
-                  )}
+                  {/* 2 Slide Selectors / Tabs */}
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    {selectedProject.slides.map((slide, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          sounds.playClick();
+                          setModalSlideIndex(idx);
+                        }}
+                        className={`p-2 sm:p-2.5 rounded-2xl border text-left transition-all flex items-center gap-2.5 cursor-pointer ${
+                          modalSlideIndex === idx
+                            ? 'bg-pink-500/20 border-pink-500/60 shadow-lg shadow-pink-500/10 scale-[1.01]'
+                            : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08]'
+                        }`}
+                      >
+                        <img
+                          src={slide.image}
+                          alt={slide.caption}
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-xl shrink-0 border border-white/10"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <span className={`text-[11px] sm:text-xs font-bold block truncate ${
+                            modalSlideIndex === idx ? 'text-pink-300' : 'text-slate-200'
+                          }`}>
+                            {idx === 0 ? 'Foto 1: Juara Harapan' : 'Foto 2: Penenun Baduy'}
+                          </span>
+                          <span className="text-[10px] sm:text-[11px] text-slate-400 block truncate mt-0.5">
+                            {idx === 0 ? 'Pengumuman Resmi Lomba' : 'Karya Peserta No. 23'}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="h-52 sm:h-64 rounded-2xl overflow-hidden relative border border-white/10">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-85" />
+                  <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-600 text-white">
+                      {selectedProject.category}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+                      {selectedProject.title}
+                    </h3>
+                  </div>
+                </div>
+              )}
 
-                  {/* Caption Overlay */}
-                  <div className="absolute bottom-0 inset-x-0 p-3.5 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent">
-                    <p className="text-sm font-bold text-white">
-                      {selectedProject.slides[modalSlideIndex].caption}
-                    </p>
-                    {selectedProject.slides[modalSlideIndex].subtitle && (
-                      <p className="text-xs text-pink-300 font-mono mt-0.5">
-                        {selectedProject.slides[modalSlideIndex].subtitle}
-                      </p>
+              {/* Details */}
+              <div className="space-y-3.5 pt-1">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                      {selectedProject.title}
+                    </h3>
+                    <span className="text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500/20 to-amber-500/20 border border-pink-500/30 text-pink-300">
+                      {selectedProject.tagline}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    {selectedProject.description}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    {selectedProject.category === 'film' 
+                      ? '🎬 Kredit & Peran Produksi' 
+                      : selectedProject.category === 'fotografi'
+                      ? '📸 Informasi & Kategori'
+                      : '⚡ Teknologi yang Digunakan'}
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedProject.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 rounded-lg bg-white/10 text-cyan-300 font-mono text-xs border border-white/5"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Sorotan Karya
+                  </h4>
+                  <div className="space-y-2 text-xs text-slate-300 bg-white/[0.03] p-3.5 rounded-xl border border-white/5">
+                    {selectedProject.category === 'film' ? (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                          <span>Karya Sinematik Original diproduksi bersama SMANTINEMA SMAN 3 Rangkasbitung</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-red-400 shrink-0" />
+                          <span>Disutradarai / Diproduseri langsung oleh Muhammad Zaki Khairi</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                          <span>Pemutaran video YouTube interaktif kualitas Full HD langsung di website</span>
+                        </div>
+                      </>
+                    ) : selectedProject.category === 'fotografi' ? (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
+                          <span>Juara Harapan 1 Lomba Fotografi Tingkat Nasional History Fair 2022 (UNSRI)</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                          <span>Karya orisinal mengangkat budaya lokal penenun kain tradisional suku Baduy, Lebak - Banten</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                          <span>Terdokumentasi dan diumumkan resmi melalui akun Instagram @historyfairunsri & @himapes_fkipunsri</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                          <span>Arsitektur kode terstruktur dan performa optimal</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                          <span>Antarmuka responsif ramah mobile & tablet</span>
+                        </div>
+                      </>
                     )}
                   </div>
                 </div>
 
-                {/* 2 Slide Selectors / Tabs */}
-                <div className="grid grid-cols-2 gap-3 pt-1">
-                  {selectedProject.slides.map((slide, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => {
-                        sounds.playClick();
-                        setModalSlideIndex(idx);
-                      }}
-                      className={`p-2.5 rounded-2xl border text-left transition-all flex items-center gap-3 cursor-pointer ${
-                        modalSlideIndex === idx
-                          ? 'bg-pink-500/20 border-pink-500/60 shadow-lg shadow-pink-500/10 scale-[1.02]'
-                          : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.08]'
-                      }`}
+                {/* Action Buttons in Modal (with wide Tutup button!) */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-3 border-t border-white/10">
+                  {selectedProject.youtubeId ? (
+                    <a
+                      href={selectedProject.demoUrl || `https://youtu.be/${selectedProject.youtubeId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="flex-1 min-w-[180px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-500 text-white font-bold text-xs shadow-lg shadow-red-500/25 hover:scale-105 active:scale-95 transition"
                     >
-                      <img
-                        src={slide.image}
-                        alt={slide.caption}
-                        className="w-12 h-12 object-cover rounded-xl shrink-0 border border-white/10"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <span className={`text-xs font-bold block truncate ${
-                          modalSlideIndex === idx ? 'text-pink-300' : 'text-slate-200'
-                        }`}>
-                          {idx === 0 ? 'Foto 1: Juara Harapan' : 'Foto 2: Penenun Baduy'}
-                        </span>
-                        <span className="text-[11px] text-slate-400 block truncate mt-0.5">
-                          {idx === 0 ? 'Pengumuman Resmi Lomba' : 'Karya Peserta No. 23'}
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="h-60 rounded-2xl overflow-hidden mb-5 relative border border-white/10">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-85" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-600 text-white">
-                    {selectedProject.category}
-                  </span>
-                  <h3 className="text-2xl font-black text-white mt-1">
-                    {selectedProject.title}
-                  </h3>
-                </div>
-              </div>
-            )}
-
-            {/* Details */}
-            <div className="space-y-4">
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <h3 className="text-2xl font-extrabold text-white">
-                    {selectedProject.title}
-                  </h3>
-                  <span className="text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pink-500/20 to-amber-500/20 border border-pink-500/30 text-pink-300">
-                    {selectedProject.tagline}
-                  </span>
-                </div>
-                <p className="text-sm text-slate-200 leading-relaxed">
-                  {selectedProject.description}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                  {selectedProject.category === 'film' 
-                    ? '🎬 Kredit & Peran Produksi' 
-                    : selectedProject.category === 'fotografi'
-                    ? '📸 Informasi & Kategori'
-                    : '⚡ Teknologi yang Digunakan'}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2.5 py-1 rounded-lg bg-white/10 text-cyan-300 font-mono text-xs border border-white/5"
+                      <Play className="w-4 h-4 fill-white text-white" />
+                      <span>Buka Tautan YouTube Asli</span>
+                    </a>
+                  ) : selectedProject.category === 'fotografi' && selectedProject.slides ? (
+                    <>
+                      <a
+                        href={selectedProject.slides[0].instagramUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => sounds.playClick()}
+                        className="flex-1 min-w-[170px] flex items-center justify-center gap-2 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
+                      >
+                        <InstagramIcon className="w-4 h-4" />
+                        <span>IG: Pengumuman Juara</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                      <a
+                        href={selectedProject.slides[1].instagramUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => sounds.playClick()}
+                        className="flex-1 min-w-[170px] flex items-center justify-center gap-2 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
+                      >
+                        <InstagramIcon className="w-4 h-4" />
+                        <span>IG: Foto Baduy</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </>
+                  ) : selectedProject.demoUrl && (
+                    <a
+                      href={selectedProject.demoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
                     >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                  Sorotan Karya
-                </h4>
-                <div className="space-y-2 text-xs text-slate-300 bg-white/[0.03] p-3.5 rounded-xl border border-white/5">
-                  {selectedProject.category === 'film' ? (
-                    <>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                        <span>Karya Sinematik Original diproduksi bersama SMANTINEMA SMAN 3 Rangkasbitung</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-red-400 shrink-0" />
-                        <span>Disutradarai / Diproduseri langsung oleh Muhammad Zaki Khairi</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span>Pemutaran video YouTube interaktif kualitas Full HD langsung di website</span>
-                      </div>
-                    </>
-                  ) : selectedProject.category === 'fotografi' ? (
-                    <>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-pink-400 shrink-0" />
-                        <span>Juara Harapan 1 Lomba Fotografi Tingkat Nasional History Fair 2022 (UNSRI)</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                        <span>Karya orisinal mengangkat budaya lokal penenun kain tradisional suku Baduy, Lebak - Banten</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span>Terdokumentasi dan diumumkan resmi melalui akun Instagram @historyfairunsri & @himapes_fkipunsri</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span>Arsitektur kode terstruktur dan performa optimal</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span>Antarmuka responsif ramah mobile & tablet</span>
-                      </div>
-                    </>
+                      <span>Buka Live Demo</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   )}
-                </div>
-              </div>
+                  {selectedProject.githubUrl && (
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => sounds.playClick()}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/10 transition"
+                    >
+                      <GithubIcon className="w-4 h-4" />
+                      <span>Source Code</span>
+                    </a>
+                  )}
 
-              {/* Action Buttons in Modal */}
-              <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
-                {selectedProject.youtubeId ? (
-                  <a
-                    href={selectedProject.demoUrl || `https://youtu.be/${selectedProject.youtubeId}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => sounds.playClick()}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-red-500 text-white font-bold text-xs shadow-lg shadow-red-500/25 hover:scale-105 active:scale-95 transition"
+                  {/* Dedicated Close Button at bottom so user doesn't have to scroll back up */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedProject(null);
+                      sounds.playClick();
+                    }}
+                    className="flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-white/10 hover:bg-rose-600 hover:text-white text-slate-300 font-bold text-xs border border-white/10 transition cursor-pointer active:scale-95"
+                    title="Tutup Jendela (Esc)"
                   >
-                    <Play className="w-4 h-4 fill-white text-white" />
-                    <span>Buka Tautan YouTube Asli</span>
-                  </a>
-                ) : selectedProject.category === 'fotografi' && selectedProject.slides ? (
-                  <>
-                    <a
-                      href={selectedProject.slides[0].instagramUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => sounds.playClick()}
-                      className="flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
-                    >
-                      <InstagramIcon className="w-4 h-4" />
-                      <span>Instagram: Pengumuman Juara</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href={selectedProject.slides[1].instagramUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => sounds.playClick()}
-                      className="flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-pink-600 via-rose-600 to-amber-500 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
-                    >
-                      <InstagramIcon className="w-4 h-4" />
-                      <span>Instagram: Karya Foto Baduy</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </>
-                ) : selectedProject.demoUrl && (
-                  <a
-                    href={selectedProject.demoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => sounds.playClick()}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
-                  >
-                    <span>Buka Live Demo</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-                {selectedProject.githubUrl && (
-                  <a
-                    href={selectedProject.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => sounds.playClick()}
-                    className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/10 transition"
-                  >
-                    <GithubIcon className="w-4 h-4" />
-                    <span>Source Code</span>
-                  </a>
-                )}
+                    <X className="w-4 h-4" />
+                    <span>Tutup</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
