@@ -62,10 +62,25 @@ export function App() {
         const hasFilms = parsed.some(p => p.id && p.id.startsWith('film-'));
         const hasRepos = parsed.some(p => p.id && p.id.startsWith('repo-'));
         const hasPhoto = parsed.some(p => p.category === 'fotografi' || p.id === 'foto-history-fair-2022');
-        if (!hasFilms || !hasRepos || !hasPhoto) {
+        const hasVercel = parsed.some(p => p.demoUrl && p.demoUrl.includes('vercel.app'));
+        if (!hasFilms || !hasRepos || !hasPhoto || !hasVercel) {
           return initialProjects;
         }
-        return parsed;
+        return parsed.map(p => {
+          const init = initialProjects.find(ip => ip.id === p.id);
+          if (init && (init.id === 'repo-kai-finder' || init.id === 'repo-ppdb1' || init.id === 'repo-ticzi')) {
+            return {
+              ...p,
+              title: init.title,
+              tagline: init.tagline,
+              demoUrl: init.demoUrl,
+              githubUrl: init.githubUrl,
+              stats: init.stats,
+              tags: init.tags
+            };
+          }
+          return p;
+        });
       } catch {
         return initialProjects;
       }

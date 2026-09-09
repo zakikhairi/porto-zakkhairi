@@ -179,56 +179,56 @@ export const initialProjects: Project[] = [
   },
   {
     id: "repo-kai-finder",
-    title: "KAI Finder",
-    tagline: "Pencari Jadwal & Tiket Kereta Api Indonesia",
-    description: "Aplikasi penelusuran jadwal, rute, dan ketersediaan perjalanan Kereta Api Indonesia (KAI) yang cepat, praktis, dan responsif.",
-    tags: ["JavaScript", "Web App", "API Integration", "Transit"],
+    title: "KAI Recruitment",
+    tagline: "Portal Rekrutmen & Karier KAI",
+    description: "Aplikasi penelusuran informasi lowongan dan rekrutmen Kereta Api Indonesia (KAI) yang responsif, cepat, dan terintegrasi.",
+    tags: ["JavaScript", "Web App", "Recruitment", "KAI", "Vercel"],
     category: "web",
     image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&auto=format&fit=crop&q=80",
-    demoUrl: "https://github.com/zakikhairi/kai-finder",
+    demoUrl: "https://kai-recruitment.vercel.app/",
     githubUrl: "https://github.com/zakikhairi/kai-finder",
     featured: true,
     color: "#0284c7",
     gradient: "from-sky-500 via-blue-600 to-indigo-600",
     stats: [
-      { label: "Bahasa", value: "JavaScript" },
-      { label: "Platform", value: "Web" }
+      { label: "Deploy", value: "Vercel" },
+      { label: "Platform", value: "Web App" }
     ]
   },
   {
     id: "repo-ppdb1",
     title: "PPDB Online System",
     tagline: "Sistem Penerimaan Peserta Didik Baru",
-    description: "Platform pendaftaran dan seleksi peserta didik baru berbasis TypeScript dengan validasi data formulir, tracking status berkas, dan dashboard administrasi sekolah.",
-    tags: ["TypeScript", "Fullstack", "School Admission", "Web System"],
+    description: "Platform pendaftaran dan seleksi peserta didik baru berbasis TypeScript dengan validasi formulir, tracking berkas, dan dashboard administrasi sekolah.",
+    tags: ["TypeScript", "Fullstack", "School Admission", "Web App", "Vercel"],
     category: "fullstack",
     image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80",
-    demoUrl: "https://github.com/zakikhairi/ppdb1",
+    demoUrl: "https://ppdb1.vercel.app/",
     githubUrl: "https://github.com/zakikhairi/ppdb1",
     featured: true,
     color: "#10b981",
     gradient: "from-emerald-500 via-teal-600 to-cyan-600",
     stats: [
-      { label: "Bahasa", value: "TypeScript" },
-      { label: "Modul", value: "Fullstack" }
+      { label: "Deploy", value: "Vercel" },
+      { label: "Stack", value: "TypeScript" }
     ]
   },
   {
     id: "repo-ticzi",
     title: "Ticzi",
     tagline: "Interactive TypeScript Application",
-    description: "Aplikasi web interaktif modern yang dibangun dengan TypeScript, mengutamakan performa responsif, modularitas komponen, dan antarmuka dinamis.",
-    tags: ["TypeScript", "Interactive UI", "State Management", "Modern Web"],
+    description: "Aplikasi web interaktif modern yang dibangun dengan TypeScript, mengutamakan performa kilat, animasi dinamis, modularitas komponen, dan antarmuka responsif.",
+    tags: ["TypeScript", "Interactive UI", "State Management", "Vercel"],
     category: "web",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
-    demoUrl: "https://github.com/zakikhairi/Ticzi",
+    demoUrl: "https://ticzi.vercel.app/",
     githubUrl: "https://github.com/zakikhairi/Ticzi",
-    featured: false,
+    featured: true,
     color: "#8b5cf6",
     gradient: "from-purple-600 via-pink-500 to-indigo-600",
     stats: [
-      { label: "Stack", value: "TypeScript" },
-      { label: "UI", value: "Reactive" }
+      { label: "Deploy", value: "Vercel" },
+      { label: "Stack", value: "TypeScript" }
     ]
   },
   {

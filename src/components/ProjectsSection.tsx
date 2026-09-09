@@ -637,7 +637,11 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                       onClick={() => sounds.playClick()}
                       className="flex-1 min-w-[160px] flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition"
                     >
-                      <span>Buka Live Demo</span>
+                      <span>
+                        {selectedProject.demoUrl.includes('vercel.app')
+                          ? 'Buka Web App (Vercel)'
+                          : 'Buka Live Demo'}
+                      </span>
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
