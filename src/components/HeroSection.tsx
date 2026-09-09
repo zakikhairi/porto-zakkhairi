@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, Play, Pause, Music2, Terminal, Download, CheckCircle2, GraduationCap } from 'lucide-react';
+import { ArrowRight, MessageSquare, Play, Pause, Music2, Terminal, Download, CheckCircle2, GraduationCap, Camera } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { ProfileData } from '../types/portfolio';
 import { InteractiveLanyard } from './InteractiveLanyard';
@@ -11,6 +11,7 @@ import { sounds } from '../utils/soundEffects';
 
 interface HeroProps {
   profile: ProfileData;
+  onOpenViewfinder?: () => void;
 }
 
 // Synchronized Role & Narrative Pairs
@@ -37,7 +38,7 @@ const ROLE_ITEMS = [
   }
 ];
 
-export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
+export const HeroSection: React.FC<HeroProps> = ({ profile, onOpenViewfinder }) => {
   const [roleIndex, setRoleIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const [isPlayingLofi, setIsPlayingLofi] = useState(false);
@@ -119,6 +120,21 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
             >
               <span>🎓 Gunadarma • IPK 3.75</span>
             </a>
+
+            {onOpenViewfinder && (
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenViewfinder();
+                  sounds.playCameraShutter();
+                }}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-red-500/15 hover:bg-red-500/25 border border-red-500/40 text-red-300 hover:text-white text-xs font-mono font-bold shadow-md hover:scale-105 active:scale-95 transition cursor-pointer"
+                title="Buka Mode Sutradara / Viewfinder Bioskop (Tekan V)"
+              >
+                <Camera className="w-3.5 h-3.5 text-red-400 animate-pulse" />
+                <span>🎬 Mode Sutradara</span>
+              </button>
+            )}
           </div>
 
           {/* Main Headline (Prominent, Bold & Balanced) */}
@@ -311,10 +327,26 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
         {/* Right Column: 3D Lanyard Interactive Badge with Floating Badges */}
         <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
           {/* Top Left Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
-            <span className="text-base">🎬</span>
-            <span>Director & Producer</span>
-          </div>
+          {onOpenViewfinder ? (
+            <button
+              type="button"
+              onClick={() => {
+                onOpenViewfinder();
+                sounds.playCameraShutter();
+              }}
+              className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-amber-500/50 hover:border-amber-400 text-amber-300 hover:text-white text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none cursor-pointer transition-all hover:scale-105 active:scale-95"
+              title="Klik untuk Masuk ke Mode Sutradara (Viewfinder)"
+            >
+              <span className="text-base">🎬</span>
+              <span>Director & Producer</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-red-600/30 text-red-300 font-mono font-bold">REC</span>
+            </button>
+          ) : (
+            <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
+              <span className="text-base">🎬</span>
+              <span>Director & Producer</span>
+            </div>
+          )}
 
           {/* Top Right Floating Satellite Pill */}
           <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono shadow-xl shadow-cyan-500/10 backdrop-blur-md absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">

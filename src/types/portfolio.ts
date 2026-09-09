@@ -94,10 +94,11 @@ export interface ExperienceItem {
   responsibilities: string[];
 }
 
-export type ThemeKey = 'cyberpunk' | 'sunset' | 'emerald' | 'violet' | 'ocean';
+export type ThemeKey = 'cyberpunk' | 'noir' | 'baduy' | 'vercel' | 'sunset' | 'emerald' | 'violet' | 'ocean';
 
 export interface ThemeConfig {
   name: string;
+  subtitle?: string;
   primary: string;
   secondary: string;
   accent: string;

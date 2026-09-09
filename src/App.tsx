@@ -11,6 +11,7 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { CustomCursor } from './components/CustomCursor';
 import { IntroLoadingScreen } from './components/IntroLoadingScreen';
 import { MobileBottomNav } from './components/MobileBottomNav';
+import { DirectorsViewfinder } from './components/DirectorsViewfinder';
 import { initialProfile, initialProjects, initialSkills, initialGuestbook, themes } from './data/initialData';
 import type { ProfileData, Project, Skill, GuestbookEntry, ThemeKey } from './types/portfolio';
 import { sounds } from './utils/soundEffects';
@@ -159,7 +160,10 @@ export function App() {
     return false;
   });
 
-  // Secret Keyboard Shortcut (Ctrl + Shift + E) to toggle Admin Mode
+  // Director's Viewfinder Mode State
+  const [isViewfinderOpen, setIsViewfinderOpen] = useState(false);
+
+  // Secret Keyboard Shortcut (Ctrl + Shift + E) to toggle Admin Mode, and 'V' for Viewfinder
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
@@ -175,6 +179,12 @@ export function App() {
             sounds.playPop(300);
             setIsCmsOpen(false);
           }
+          return next;
+        });
+      } else if (e.code === 'KeyV' && !e.metaKey && !e.ctrlKey && !(e.target as HTMLElement)?.closest('input, textarea')) {
+        setIsViewfinderOpen(prev => {
+          const next = !prev;
+          if (next) sounds.playCameraShutter();
           return next;
         });
       }
@@ -312,12 +322,14 @@ export function App() {
             return next;
           });
         }}
+        onOpenViewfinder={() => setIsViewfinderOpen(true)}
       />
 
       {/* Main Content Sections */}
       <main className="relative z-10">
         <HeroSection
           profile={profile}
+          onOpenViewfinder={() => setIsViewfinderOpen(true)}
         />
 
         <BentoGrid
@@ -405,6 +417,14 @@ export function App() {
           setIsAdminMode(false);
           localStorage.removeItem('portfolio_admin_mode');
         }}
+      />
+
+      {/* Professional Cinema Director's Viewfinder Mode */}
+      <DirectorsViewfinder
+        isOpen={isViewfinderOpen}
+        onClose={() => setIsViewfinderOpen(false)}
+        currentTheme={themeKey}
+        onSelectTheme={handleSelectTheme}
       />
     </div>
   );

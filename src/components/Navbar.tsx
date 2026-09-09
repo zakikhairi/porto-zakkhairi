@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Palette, Sliders, Menu, X, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, Palette, Menu, X, Sparkles, Camera, Sliders } from 'lucide-react';
 import type { ThemeKey } from '../types/portfolio';
 import { themes } from '../data/initialData';
 import { sounds } from '../utils/soundEffects';
@@ -12,6 +12,7 @@ interface NavbarProps {
   onOpenCms: () => void;
   isAdminMode?: boolean;
   onToggleAdmin?: () => void;
+  onOpenViewfinder?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -21,7 +22,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleSound,
   onOpenCms,
   isAdminMode = false,
-  onToggleAdmin
+  onToggleAdmin,
+  onOpenViewfinder
 }) => {
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -56,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className="pointer-events-auto w-full max-w-4xl rounded-full glass-panel border border-white/10 px-5 py-2.5 shadow-2xl flex items-center justify-between transition-all backdrop-blur-2xl">
+      <nav className="pointer-events-auto w-full max-w-4xl rounded-full glass-panel border border-white/10 px-4 sm:px-5 py-2.5 shadow-2xl flex items-center justify-between transition-all backdrop-blur-2xl">
         {/* Sleek Balanced Brand with secret multi-click unlock */}
         <button
           type="button"
@@ -92,8 +94,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
         </div>
 
-        {/* Action Controls (Theme, Sound, CMS Button) */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Action Controls (Viewfinder, Theme, Sound, CMS Button) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Director's Viewfinder Mode Button */}
+          {onOpenViewfinder && (
+            <button
+              type="button"
+              onClick={() => {
+                onOpenViewfinder();
+                sounds.playCameraShutter();
+              }}
+              title="Mode Sutradara / Viewfinder Bioskop"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 hover:text-white transition cursor-pointer text-xs font-mono font-bold shadow-md hover:scale-105 active:scale-95"
+            >
+              <Camera className="w-3.5 h-3.5 text-red-400 animate-pulse" />
+              <span className="hidden sm:inline">Viewfinder</span>
+            </button>
+          )}
+
           {/* Sound Toggle */}
           <button
             onClick={() => {
@@ -117,44 +135,52 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setThemeDropdownOpen(!themeDropdownOpen);
                 sounds.playClick();
               }}
-              title="Ganti Tema Warna"
+              title="Ganti Atmosfer Warna"
               className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition flex items-center cursor-pointer"
             >
               <Palette className="w-4 h-4 text-pink-400" />
             </button>
 
             {themeDropdownOpen && (
-              <div className="absolute right-0 mt-3 w-48 rounded-2xl glass-panel border border-white/15 p-2 shadow-2xl z-50 backdrop-blur-2xl">
-                <div className="text-[11px] font-semibold text-slate-400 px-2 py-1 uppercase tracking-wider font-mono">
-                  Pilih Tema
+              <div className="absolute right-0 mt-3 w-64 rounded-2xl glass-panel border border-white/15 p-2.5 shadow-2xl z-50 backdrop-blur-2xl animate-fadeIn">
+                <div className="text-[11px] font-semibold text-slate-400 px-2 py-1 uppercase tracking-wider font-mono flex items-center justify-between border-b border-white/10 pb-1.5 mb-1.5">
+                  <span>Atmosfer Sinematik</span>
+                  <Sparkles className="w-3 h-3 text-pink-400" />
                 </div>
-                {Object.entries(themes).map(([key, t]) => {
-                  const isActive = currentTheme === key;
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => {
-                        onSelectTheme(key as ThemeKey);
-                        setThemeDropdownOpen(false);
-                        sounds.playClick();
-                      }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition cursor-pointer ${
-                        isActive
-                          ? 'bg-purple-600/30 text-white font-bold border border-purple-500/40'
-                          : 'text-slate-300 hover:bg-white/10 hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          className="w-3 h-3 rounded-full shadow"
-                          style={{ backgroundColor: t.primary }}
-                        />
-                        <span>{t.name}</span>
-                      </div>
-                      {isActive && <span className="text-cyan-400 text-xs">✓</span>}
-                    </button>
-                  );
-                })}
+                <div className="space-y-1 max-h-72 overflow-y-auto pr-1">
+                  {Object.entries(themes).map(([key, t]) => {
+                    const isActive = currentTheme === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => {
+                          onSelectTheme(key as ThemeKey);
+                          setThemeDropdownOpen(false);
+                          sounds.playClick();
+                        }}
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition cursor-pointer ${
+                          isActive
+                            ? 'bg-gradient-to-r from-purple-600/40 to-pink-600/30 text-white font-bold border border-purple-500/50 shadow-md'
+                            : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span
+                            className="w-3.5 h-3.5 rounded-full shadow shrink-0"
+                            style={{ backgroundColor: t.primary, boxShadow: `0 0 8px ${t.primary}` }}
+                          />
+                          <div>
+                            <div className="font-semibold text-white">{t.name}</div>
+                            {t.subtitle && (
+                              <div className="text-[10px] text-slate-400 font-normal">{t.subtitle}</div>
+                            )}
+                          </div>
+                        </div>
+                        {isActive && <span className="text-cyan-400 text-xs font-bold ml-1">✓</span>}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

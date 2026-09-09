@@ -368,6 +368,7 @@ export const initialGuestbook: GuestbookEntry[] = [
 export const themes: Record<ThemeKey, ThemeConfig> = {
   cyberpunk: {
     name: "Cyberpunk Neon",
+    subtitle: "Sci-Fi & Modern Tech",
     primary: "#ec4899",
     secondary: "#06b6d4",
     accent: "#a855f7",
@@ -375,39 +376,73 @@ export const themes: Record<ThemeKey, ThemeConfig> = {
     glowColor: "rgba(236,72,153,0.4)",
     badgeBg: "from-pink-500 to-cyan-500"
   },
-  sunset: {
-    name: "Sunset Vibes",
+  noir: {
+    name: "Cinema Noir 35mm",
+    subtitle: "Monokrom Sinematik Kontras Tinggi",
+    primary: "#f8fafc",
+    secondary: "#94a3b8",
+    accent: "#fbbf24",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(255,255,255,0.12), rgba(148,163,184,0.06), rgba(8,9,14,1))",
+    glowColor: "rgba(255,255,255,0.22)",
+    badgeBg: "from-slate-200 via-slate-400 to-amber-400"
+  },
+  baduy: {
+    name: "Baduy Heritage",
+    subtitle: "Kearifan Lokal & Tenun Tradisional",
     primary: "#f97316",
+    secondary: "#d97706",
+    accent: "#ec4899",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(249,115,22,0.24), rgba(217,119,6,0.15), rgba(18,12,14,1))",
+    glowColor: "rgba(249,115,22,0.35)",
+    badgeBg: "from-amber-600 via-orange-500 to-rose-600"
+  },
+  vercel: {
+    name: "Vercel Modern",
+    subtitle: "Silicon Valley Tech Minimalist",
+    primary: "#10b981",
+    secondary: "#38bdf8",
+    accent: "#ffffff",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(16,185,129,0.2), rgba(56,189,248,0.12), rgba(6,8,15,1))",
+    glowColor: "rgba(16,185,129,0.35)",
+    badgeBg: "from-emerald-400 to-cyan-400"
+  },
+  sunset: {
+    name: "Golden Hour Sinema",
+    subtitle: "Magic Hour & Warm Sunset Glow",
+    primary: "#f59e0b",
     secondary: "#f43f5e",
     accent: "#fbbf24",
-    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(249,115,22,0.25), rgba(244,63,94,0.18), rgba(10,12,22,1))",
-    glowColor: "rgba(249,115,22,0.4)",
-    badgeBg: "from-orange-500 to-rose-500"
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(245,158,11,0.25), rgba(244,63,94,0.18), rgba(14,10,18,1))",
+    glowColor: "rgba(245,158,11,0.4)",
+    badgeBg: "from-amber-500 to-rose-500"
   },
   emerald: {
     name: "Aurora Emerald",
+    subtitle: "Hutan Tropis & Neon Hijau",
     primary: "#10b981",
     secondary: "#06b6d4",
     accent: "#84cc16",
-    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(16,185,129,0.25), rgba(6,182,212,0.18), rgba(10,12,22,1))",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(16,185,129,0.25), rgba(6,182,212,0.18), rgba(8,16,16,1))",
     glowColor: "rgba(16,185,129,0.4)",
     badgeBg: "from-emerald-500 to-cyan-500"
   },
   violet: {
     name: "Electric Violet",
+    subtitle: "Sinema Fantasi & Synthwave",
     primary: "#8b5cf6",
     secondary: "#d946ef",
     accent: "#3b82f6",
-    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(139,92,246,0.3), rgba(217,70,239,0.18), rgba(10,12,22,1))",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(139,92,246,0.3), rgba(217,70,239,0.18), rgba(12,10,24,1))",
     glowColor: "rgba(139,92,246,0.4)",
     badgeBg: "from-violet-500 to-fuchsia-500"
   },
   ocean: {
-    name: "Ocean Breeze",
+    name: "Deep Pacific",
+    subtitle: "Kedalaman Samudra & Langit Biru",
     primary: "#0284c7",
     secondary: "#14b8a6",
     accent: "#6366f1",
-    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(2,132,199,0.25), rgba(20,184,166,0.18), rgba(10,12,22,1))",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(2,132,199,0.25), rgba(20,184,166,0.18), rgba(8,14,26,1))",
     glowColor: "rgba(2,132,199,0.4)",
     badgeBg: "from-sky-500 to-teal-500"
   }

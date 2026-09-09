@@ -196,6 +196,80 @@ class SoundController {
       // Audio handling
     }
   }
+
+  // Authentic wooden film clapperboard snap
+  playClapperboard() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      // High woody snap transient
+      const oscSnap = this.ctx.createOscillator();
+      const gainSnap = this.ctx.createGain();
+      oscSnap.type = 'triangle';
+      oscSnap.frequency.setValueAtTime(2400, now);
+      oscSnap.frequency.exponentialRampToValueAtTime(320, now + 0.05);
+
+      gainSnap.gain.setValueAtTime(0.25, now);
+      gainSnap.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      oscSnap.connect(gainSnap);
+      gainSnap.connect(this.ctx.destination);
+      oscSnap.start(now);
+      oscSnap.stop(now + 0.05);
+
+      // Deep hollow resonance of the clapper wooden stick
+      const oscBody = this.ctx.createOscillator();
+      const gainBody = this.ctx.createGain();
+      oscBody.type = 'sine';
+      oscBody.frequency.setValueAtTime(360, now + 0.01);
+      oscBody.frequency.exponentialRampToValueAtTime(90, now + 0.09);
+
+      gainBody.gain.setValueAtTime(0.18, now + 0.01);
+      gainBody.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+      oscBody.connect(gainBody);
+      gainBody.connect(this.ctx.destination);
+      oscBody.start(now + 0.01);
+      oscBody.stop(now + 0.09);
+    } catch {
+      // Audio handling
+    }
+  }
+
+  // Camera autofocus confirmation beep
+  playFocusBeep() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      const osc1 = this.ctx.createOscillator();
+      const gain1 = this.ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(2200, now);
+      gain1.gain.setValueAtTime(0.06, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc1.connect(gain1);
+      gain1.connect(this.ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.04);
+
+      const osc2 = this.ctx.createOscillator();
+      const gain2 = this.ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(2200, now + 0.07);
+      gain2.gain.setValueAtTime(0.08, now + 0.07);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc2.connect(gain2);
+      gain2.connect(this.ctx.destination);
+      osc2.start(now + 0.07);
+      osc2.stop(now + 0.12);
+    } catch {
+      // Audio handling
+    }
+  }
 }
 
 export const sounds = new SoundController();
