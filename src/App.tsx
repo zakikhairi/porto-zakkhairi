@@ -23,9 +23,7 @@ export function App() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (!parsed.avatarUrl || parsed.avatarUrl.includes('unsplash.com')) {
-          parsed.avatarUrl = '/profile.jpg';
-        }
+        parsed.avatarUrl = '/profile.jpg';
         if (parsed.name && (parsed.name.toLowerCase().includes('ikky') || !parsed.name.includes('Zaki'))) {
           parsed.name = 'Muhammad Zaki Khairi';
           parsed.handle = '@zakikhairi';
