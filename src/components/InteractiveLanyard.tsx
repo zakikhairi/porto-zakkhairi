@@ -191,12 +191,12 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
   // String physics curve calculation - 1:1 synchronized with card translation
   const anchorX = 140;
   const cardTopX = anchorX + pos.x;
-  const cardTopY = 70 + pos.y;
+  const cardTopY = 68 + pos.y;
 
   return (
-    <div className="relative flex flex-col items-center justify-center select-none w-full max-w-[350px] mx-auto py-1">
-      {/* SVG Lanyard Strap & Clasp (Renders physically clamped over the card) */}
-      <svg className="w-full h-20 overflow-visible pointer-events-none z-20 relative" viewBox="0 0 280 85">
+    <div className="relative flex flex-col items-center justify-center select-none w-[280px] mx-auto py-1">
+      {/* SVG Lanyard Strap & Clasp (Exact 1:1 pixel coordinate alignment) */}
+      <svg className="w-[280px] h-[75px] overflow-visible pointer-events-none z-20 relative" viewBox="0 0 280 75">
         <defs>
           <linearGradient id="lanyardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#8b5cf6" />
@@ -217,7 +217,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
         
         {/* Dynamic Curved Ribbon (Stretches fluidly from anchor to clasp) */}
         <path
-          d={`M ${anchorX - 12} 4 Q ${anchorX - 6 + pos.x * 0.35} ${36 + pos.y * 0.35} ${cardTopX - 6} ${cardTopY - 14}`}
+          d={`M ${anchorX - 12} 4 Q ${anchorX - 6 + pos.x * 0.35} ${32 + pos.y * 0.35} ${cardTopX - 6} ${cardTopY - 14}`}
           fill="none"
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
@@ -225,7 +225,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           filter="url(#glow)"
         />
         <path
-          d={`M ${anchorX + 12} 4 Q ${anchorX + 6 + pos.x * 0.35} ${36 + pos.y * 0.35} ${cardTopX + 6} ${cardTopY - 14}`}
+          d={`M ${anchorX + 12} 4 Q ${anchorX + 6 + pos.x * 0.35} ${32 + pos.y * 0.35} ${cardTopX + 6} ${cardTopY - 14}`}
           fill="none"
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
@@ -255,21 +255,21 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           strokeWidth="1.5"
         />
 
-        {/* Metallic Lobster Claw / Clasp Hook that physically clamps onto the card */}
+        {/* Metallic Lobster Claw / Clasp Hook that physically clamps onto the card tab */}
         <rect
           x={cardTopX - 6}
-          y={cardTopY - 3}
+          y={cardTopY - 2}
           width="12"
-          height="15"
+          height="16"
           rx="3"
           fill="#cbd5e1"
-          stroke="#334155"
+          stroke="#1e293b"
           strokeWidth="1.5"
         />
         {/* Clasp Tongue Accent */}
         <rect
           x={cardTopX - 2.5}
-          y={cardTopY + 1}
+          y={cardTopY + 2}
           width="5"
           height="8"
           rx="1"
@@ -292,8 +292,16 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           WebkitUserDrag: 'none',
           userSelect: 'none'
         } as React.CSSProperties}
-        className="relative -mt-4 w-[275px] h-[395px] sm:w-[290px] sm:h-[410px] rounded-3xl p-1 shadow-2xl transition-shadow select-none touch-none z-10"
+        className="relative -mt-4 w-[280px] h-[400px] rounded-3xl p-1 shadow-2xl transition-shadow select-none touch-none z-10"
       >
+        {/* Physical 3D Badge Attachment Tab & Hole - molded into top center of the card */}
+        <div 
+          className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-14 h-5 rounded-t-xl bg-gradient-to-b from-slate-700 to-slate-800 border-t border-x border-slate-500/60 shadow-md flex items-center justify-center z-30 pointer-events-none"
+          style={{ transform: 'translateZ(3px)' }}
+        >
+          <div className="w-7 h-1.5 rounded-full bg-slate-950 border border-slate-700 shadow-inner" />
+        </div>
+
         {/* Glowing Ambient Halo (pointer-events-none, calmed when flipped for readability) */}
         <div 
           className={`absolute -inset-1 rounded-3xl bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-400 ${
