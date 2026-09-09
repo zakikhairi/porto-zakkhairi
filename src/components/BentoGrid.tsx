@@ -214,7 +214,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ skills, profile }) => {
       {/* Bento Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
         {/* Module 1: Interactive Terminal Console / Snake Game (Col 7) */}
-        <div className="md:col-span-7 glass-panel rounded-3xl p-6 border border-white/10 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:border-cyan-500/40 transition">
+        <div className="md:col-span-7 glass-panel card-shine-container rounded-3xl p-6 border border-white/10 flex flex-col justify-between relative overflow-hidden shadow-2xl group hover:border-cyan-500/40 hover:-translate-y-1 transition-all duration-300">
           {/* Terminal Window Top Bar */}
           <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
             <div className="flex items-center gap-2">
@@ -394,7 +394,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ skills, profile }) => {
         </div>
 
         {/* Module 2: Tech Radar / Skills (Col 5) */}
-        <div className="md:col-span-5 glass-panel rounded-3xl p-6 border border-white/10 flex flex-col justify-between shadow-2xl group hover:border-purple-500/40 transition">
+        <div className="md:col-span-5 glass-panel card-shine-container rounded-3xl p-6 border border-white/10 flex flex-col justify-between shadow-2xl group hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300">
           <div>
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-white text-base flex items-center gap-2">
@@ -452,7 +452,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ skills, profile }) => {
         </div>
 
         {/* Module 3: GitHub Activity Heatmap Simulation (Col 8) */}
-        <div className="md:col-span-8 glass-panel rounded-3xl p-6 border border-white/10 shadow-2xl flex flex-col justify-between group hover:border-emerald-500/40 transition">
+        <div className="md:col-span-8 glass-panel card-shine-container rounded-3xl p-6 border border-white/10 shadow-2xl flex flex-col justify-between group hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <GitBranch className="w-4 h-4 text-emerald-400" />
@@ -503,7 +503,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ skills, profile }) => {
         </div>
 
         {/* Module 4: Quick Philosophy & Superpowers (Col 4) */}
-        <div className="md:col-span-4 glass-panel rounded-3xl p-6 border border-white/10 shadow-2xl flex flex-col justify-between group hover:border-pink-500/40 transition">
+        <div className="md:col-span-4 glass-panel card-shine-container rounded-3xl p-6 border border-white/10 shadow-2xl flex flex-col justify-between group hover:border-pink-500/40 hover:-translate-y-1 transition-all duration-300">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Flame className="w-4 h-4 text-pink-400" />

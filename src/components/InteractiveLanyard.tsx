@@ -15,6 +15,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [rot, setRot] = useState({ x: 0, y: 0, z: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [isSpringing, setIsSpringing] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [likes, setLikes] = useState(128);
   const [hasLiked, setHasLiked] = useState(false);
@@ -23,20 +24,22 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
   const dragStartRef = useRef({ x: 0, y: 0 });
   const currentPosRef = useRef({ x: 0, y: 0 });
   const animFrameRef = useRef<number | null>(null);
+  const moveRafRef = useRef<number | null>(null);
   const velocityRef = useRef({ vx: 0, vy: 0 });
   const lastMoveTimeRef = useRef(0);
 
   // Smooth, lively spring-back animation with release inertia and oscillations
   useEffect(() => {
     if (!isDragging) {
+      setIsSpringing(true);
       // Inherit user's drag fling velocity for realistic inertia
-      let vx = Math.max(-28, Math.min(28, velocityRef.current.vx));
-      let vy = Math.max(-28, Math.min(28, velocityRef.current.vy));
+      let vx = Math.max(-24, Math.min(24, velocityRef.current.vx));
+      let vy = Math.max(-24, Math.min(24, velocityRef.current.vy));
       velocityRef.current = { vx: 0, vy: 0 };
 
       // Tuned spring and damping for a delightful, bouncy pendulum swing
-      const spring = 0.08;
-      const damping = 0.85;
+      const spring = 0.09;
+      const damping = 0.84;
 
       const step = () => {
         const dx = 0 - currentPosRef.current.x;
@@ -57,18 +60,20 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           z: currentPosRef.current.x * 0.07 + vx * 0.2
         });
 
-        if (Math.abs(vx) > 0.06 || Math.abs(vy) > 0.06 || Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        if (Math.abs(vx) > 0.08 || Math.abs(vy) > 0.08 || Math.abs(dx) > 0.15 || Math.abs(dy) > 0.15) {
           animFrameRef.current = requestAnimationFrame(step);
         } else {
           setPos({ x: 0, y: 0 });
           setRot({ x: 0, y: 0, z: 0 });
           currentPosRef.current = { x: 0, y: 0 };
+          setIsSpringing(false);
         }
       };
 
       animFrameRef.current = requestAnimationFrame(step);
       return () => {
         if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+        if (moveRafRef.current) cancelAnimationFrame(moveRafRef.current);
       };
     }
   }, [isDragging]);
@@ -105,12 +110,18 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
     lastMoveTimeRef.current = now;
 
     currentPosRef.current = { x: nx, y: ny };
-    setPos({ x: nx, y: ny });
-    setRot({
-      x: -ny * 0.16 + vy * 0.35,
-      y: nx * 0.16 + vx * 0.35,
-      z: nx * 0.07 + vx * 0.2
-    });
+
+    if (!moveRafRef.current) {
+      moveRafRef.current = requestAnimationFrame(() => {
+        setPos({ x: currentPosRef.current.x, y: currentPosRef.current.y });
+        setRot({
+          x: -currentPosRef.current.y * 0.16 + velocityRef.current.vy * 0.35,
+          y: currentPosRef.current.x * 0.16 + velocityRef.current.vx * 0.35,
+          z: currentPosRef.current.x * 0.07 + velocityRef.current.vx * 0.2
+        });
+        moveRafRef.current = null;
+      });
+    }
   };
 
   const handleEnd = () => {
@@ -203,13 +214,6 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
             <stop offset="50%" stopColor="#ec4899" />
             <stop offset="100%" stopColor="#06b6d4" />
           </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
         </defs>
 
         {/* Lanyard Top Anchor Loop */}
@@ -222,7 +226,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
           strokeLinecap="round"
-          filter="url(#glow)"
+          className="drop-shadow-[0_0_8px_rgba(236,72,153,0.45)]"
         />
         <path
           d={`M ${anchorX + 12} 4 Q ${anchorX + 6 + pos.x * 0.35} ${32 + pos.y * 0.35} ${cardTopX + 6} ${cardTopY - 14}`}
@@ -230,7 +234,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           stroke="url(#lanyardGradient)"
           strokeWidth="6.5"
           strokeLinecap="round"
-          filter="url(#glow)"
+          className="drop-shadow-[0_0_8px_rgba(236,72,153,0.45)]"
         />
 
         {/* Metallic Ribbon Clamp / Buckle */}
@@ -287,7 +291,8 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
           transform: `translate3d(${pos.x}px, ${pos.y}px, 0px) rotateX(${rot.x}deg) rotateY(${rot.y + (isFlipped ? 180 : 0)}deg) rotateZ(${rot.z}deg)`,
           transformOrigin: 'top center',
           transformStyle: 'preserve-3d',
-          transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          transition: isDragging || isSpringing ? 'none' : 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          willChange: 'transform',
           cursor: isDragging ? 'grabbing' : 'grab',
           WebkitUserDrag: 'none',
           userSelect: 'none'

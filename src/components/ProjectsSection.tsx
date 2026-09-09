@@ -113,7 +113,7 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
             <div
               key={project.id}
               onClick={() => handleCardClick(project)}
-              className="group relative rounded-3xl glass-card border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-300 shadow-xl"
+              className="group relative rounded-3xl glass-card card-shine-container border border-white/10 overflow-hidden cursor-pointer flex flex-col justify-between hover:-translate-y-2 hover:shadow-2xl hover:border-cyan-500/40 transition-all duration-300 shadow-xl"
             >
               {/* Top Image Banner with Gradient Overlay */}
               <div className="relative h-52 w-full overflow-hidden bg-slate-900">
@@ -203,8 +203,18 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                   </span>
                 </div>
 
-                {/* Action / Multi-slide Badge */}
+                {/* Action / Multi-slide / Vercel Live Badge */}
                 <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+                  {/* Glowing Live on Vercel badge */}
+                  {project.demoUrl?.includes('vercel.app') && (
+                    <span className="px-2.5 py-1 rounded-full bg-slate-950/90 border border-emerald-500/60 text-emerald-300 text-[10px] font-mono font-bold flex items-center gap-1.5 shadow-lg shadow-emerald-500/25 backdrop-blur-md">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                      </span>
+                      <span>Vercel Live</span>
+                    </span>
+                  )}
                   {isMultiSlide && (
                     <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/40 text-pink-300 text-[10px] font-mono font-bold flex items-center gap-1 shadow-md">
                       <Camera className="w-3 h-3 text-pink-400" />
@@ -212,16 +222,16 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                     </span>
                   )}
                   {project.youtubeId ? (
-                    <span className="p-1.5 rounded-lg bg-red-600 text-white shadow-md">
+                    <span className="p-1.5 rounded-lg bg-red-600 text-white shadow-md group-hover:scale-110 transition-transform">
                       <Play className="w-3.5 h-3.5 fill-white" />
                     </span>
                   ) : project.demoUrl ? (
-                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-cyan-400 hover:text-white">
+                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-cyan-400 hover:text-white border border-cyan-500/30 group-hover:scale-110 transition-transform" title={project.demoUrl.includes('vercel.app') ? 'Buka Vercel Web App' : 'Buka Live Demo'}>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </span>
                   ) : null}
                   {project.githubUrl && (
-                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-purple-400 hover:text-white">
+                    <span className="p-1.5 rounded-lg bg-slate-900/80 text-purple-400 hover:text-white border border-purple-500/30 group-hover:scale-110 transition-transform" title="Source Code GitHub">
                       <GithubIcon className="w-3.5 h-3.5" />
                     </span>
                   )}
@@ -286,6 +296,9 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                   </div>
                 )}
               </div>
+
+              {/* Glowing bottom accent line that slides in on hover */}
+              <div className="h-1 w-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           );
         })}

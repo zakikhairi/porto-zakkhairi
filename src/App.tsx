@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { BentoGrid } from './components/BentoGrid';
@@ -15,6 +15,39 @@ import { initialProfile, initialProjects, initialSkills, initialGuestbook, theme
 import type { ProfileData, Project, Skill, GuestbookEntry, ThemeKey } from './types/portfolio';
 import { sounds } from './utils/soundEffects';
 import { Sliders, Sparkles } from 'lucide-react';
+
+// Isolated high-performance spotlight glow to prevent re-rendering root App on mousemove
+const SpotlightGlow = memo(({ glowColor }: { glowColor: string }) => {
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (spotlightRef.current) {
+            spotlightRef.current.style.background = `radial-gradient(650px at ${e.clientX}px ${e.clientY}px, ${glowColor}, transparent 80%)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [glowColor]);
+
+  return (
+    <div
+      ref={spotlightRef}
+      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 will-change-[background]"
+      style={{
+        background: `radial-gradient(650px at 50% 50%, ${glowColor}, transparent 80%)`
+      }}
+    />
+  );
+});
 
 export function App() {
   // Local storage state initialization with fallbacks
@@ -150,17 +183,6 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Mouse cursor spotlight tracker
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem('portfolio_profile', JSON.stringify(profile));
@@ -256,12 +278,7 @@ export function App() {
       )}
 
       {/* Interactive Cursor Ambient Glow Spotlight */}
-      <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, ${currentTheme.glowColor}, transparent 80%)`
-        }}
-      />
+      <SpotlightGlow glowColor={currentTheme.glowColor} />
 
       {/* Grid Pattern Background Layer */}
       <div 

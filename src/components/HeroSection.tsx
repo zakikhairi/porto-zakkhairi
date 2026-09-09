@@ -308,8 +308,35 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
           </div>
         </div>
 
-        {/* Right Column: 3D Lanyard Interactive Badge */}
-        <div className="lg:col-span-5 flex flex-col items-center justify-center">
+        {/* Right Column: 3D Lanyard Interactive Badge with Floating Badges */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+          {/* Top Left Floating Satellite Pill */}
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
+            <span className="text-base">🎬</span>
+            <span>Director & Producer</span>
+          </div>
+
+          {/* Top Right Floating Satellite Pill */}
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono shadow-xl shadow-cyan-500/10 backdrop-blur-md absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+            </span>
+            <span>Live on Vercel</span>
+          </div>
+
+          {/* Bottom Left Floating Satellite Pill */}
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-xl shadow-emerald-500/10 backdrop-blur-md absolute bottom-8 -left-8 z-20 animate-float-reverse select-none pointer-events-none">
+            <span className="text-base">🏆</span>
+            <span>Juara 1 Provinsi</span>
+          </div>
+
+          {/* Bottom Right Floating Satellite Pill */}
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-purple-500/40 text-purple-300 text-xs font-semibold shadow-xl shadow-purple-500/10 backdrop-blur-md absolute -bottom-2 -right-4 z-20 animate-float-slow select-none pointer-events-none">
+            <span className="text-base">✨</span>
+            <span>Creative Media</span>
+          </div>
+
           <InteractiveLanyard profile={profile} />
         </div>
       </div>
