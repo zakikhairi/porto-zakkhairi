@@ -13,27 +13,27 @@ interface HeroProps {
   profile: ProfileData;
 }
 
-// Synchronized Role & Narrative Pairs
+// Synchronized Role & Narrative Pairs (Spider-Verse Multiverse Style)
 const ROLE_ITEMS = [
   {
-    title: "Film Director & Producer",
-    bio: "Sutradara film 'TANAH JAWARA' dan Produser film peraih Juara 1 Tingkat Provinsi 'PLUS MINUS' (SMANTINEMA). Berpengalaman dalam penyutradaraan, manajemen produksi film, visual storytelling, dan media digital kreatif."
+    title: "🕷️ Friendly Neighborhood Director",
+    bio: "\"With great code and cinematography comes great storytelling.\" Sutradara film 'TANAH JAWARA' dan Produser film peraih Juara 1 Tingkat Provinsi 'PLUS MINUS' (SMANTINEMA). Berpengalaman dalam visual storytelling, penyutradaraan, dan media digital kreatif."
   },
   {
-    title: "S1 Sistem Informasi Gunadarma",
-    bio: "Mahasiswa aktif S1 Sistem Informasi Universitas Gunadarma dengan IPK 3,75. Mendalami teknologi informasi, arsitektur basis data, komputasi big data, dan rekayasa kecerdasan artifisial."
+    title: "🕸️ S1 Sistem Informasi Gunadarma",
+    bio: "Mahasiswa aktif S1 Sistem Informasi Universitas Gunadarma dengan IPK 3,75. Mendalami arsitektur sistem informasi, rekayasa web modern, basis data cerdas, dan komputasi artificial intelligence."
   },
   {
-    title: "Wakil Ketua Creative Media",
+    title: "🎬 Film Director & Producer",
+    bio: "Sutradara film 'TANAH JAWARA' & Produser film Juara 1 Tingkat Provinsi 'PLUS MINUS' (SMANTINEMA). Mengombinasikan estetika sinematik berkarakter kuat dengan manajemen produksi profesional."
+  },
+  {
+    title: "⚡ Wakil Ketua Creative Media",
     bio: "Wakil Ketua Creative Media Lebak Expo University. Memimpin strategi komunikasi visual, visual branding terpadu, kampanye promosi digital, dan supervisi konten kreatif lintas divisi."
   },
   {
-    title: "Visual Storyteller & Brand Designer",
-    bio: "Mengombinasikan kepekaan sinematografi, estetika visual modern, dan narasi cerita untuk menghasilkan karya multimedia yang berkarakter kuat serta memikat audiens."
-  },
-  {
-    title: "SMANTINEMA Creative Leader",
-    bio: "Pemimpin dan penggerak komunitas sinematografi SMANTINEMA SMAN 3 Rangkasbitung. Berpengalaman memproduksi film fiksi dan dokumenter berkualitas tinggi peraih penghargaan."
+    title: "📷 National Award Photographer",
+    bio: "Peraih Juara Harapan 1 Tingkat Nasional Fotografi Baduy. Mengabadikan jiwa, emosi, dan kearifan lokal Nusantara melalui lensa fotografi analog dan modern."
   }
 ];
 
@@ -151,8 +151,8 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 pt-1 w-full max-w-sm sm:max-w-none">
             <a
               href="#projects"
-              onClick={() => sounds.playClick()}
-              className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105 active:scale-95 transition cursor-pointer text-center"
+              onClick={() => sounds.playWebThwip()}
+              className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-blue-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-500/25 hover:shadow-red-500/45 hover:scale-105 active:scale-95 transition cursor-pointer text-center"
             >
               <span>Jelajahi Proyek</span>
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -307,30 +307,31 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
         {/* Right Column: 3D Lanyard Interactive Badge with Floating Badges */}
         <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
           {/* Top Left Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
-            <span className="text-base">🎬</span>
-            <span>Director & Producer</span>
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-red-500/50 text-red-300 text-xs font-semibold shadow-xl shadow-red-500/20 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
+            <span className="text-base">🕷️</span>
+            <span>Spider-Sense Active</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-red-600/40 text-red-200 font-mono font-bold">100%</span>
           </div>
 
           {/* Top Right Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono shadow-xl shadow-cyan-500/10 backdrop-blur-md absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-blue-500/50 text-blue-300 text-xs font-mono shadow-xl shadow-blue-500/20 backdrop-blur-md absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
             </span>
-            <span>Live on Vercel</span>
+            <span>🕸️ Web-Slinger on Vercel</span>
           </div>
 
           {/* Bottom Left Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-xl shadow-emerald-500/10 backdrop-blur-md absolute bottom-8 -left-8 z-20 animate-float-reverse select-none pointer-events-none">
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute bottom-8 -left-8 z-20 animate-float-reverse select-none pointer-events-none">
             <span className="text-base">🏆</span>
-            <span>Juara 1 Provinsi</span>
+            <span>Juara 1 Film Provinsi</span>
           </div>
 
           {/* Bottom Right Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-purple-500/40 text-purple-300 text-xs font-semibold shadow-xl shadow-purple-500/10 backdrop-blur-md absolute -bottom-2 -right-4 z-20 animate-float-slow select-none pointer-events-none">
-            <span className="text-base">✨</span>
-            <span>Creative Media</span>
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-red-500/40 text-rose-300 text-xs font-semibold shadow-xl shadow-red-500/10 backdrop-blur-md absolute -bottom-2 -right-4 z-20 animate-float-slow select-none pointer-events-none">
+            <span className="text-base">⚡</span>
+            <span>Bio-Electric 120 FPS</span>
           </div>
 
           <InteractiveLanyard profile={profile} />

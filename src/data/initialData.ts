@@ -4,9 +4,9 @@ export const initialProfile: ProfileData = {
   name: "Muhammad Zaki Khairi",
   handle: "@zakikhairi",
   role: "S1 Sistem Informasi Gunadarma • Film Director & Creative Media",
-  headline: "S1 Sistem Informasi Gunadarma • Film Director, Producer & Creative Media",
+  headline: "🕷️ Friendly Neighborhood Tech & Director • S1 SI Gunadarma • Film Producer",
   bio: "Mahasiswa S1 Sistem Informasi Universitas Gunadarma (IPK 3,75) dengan fokus pada teknologi informasi, media kreatif, dan visual branding. Sutradara film 'TANAH JAWARA', Produser Juara 1 'PLUS MINUS' (SMANTINEMA), serta Wakil Ketua Creative Media Lebak Expo University.",
-  status: "🟢 Available for Film, Creative & Tech Projects",
+  status: "🕸️ Available for Tech, Film & Creative Missions",
   location: "Rangkasbitung - Lebak, Banten 🇮🇩",
   email: "muhammadzakikhairi19@gmail.com",
   phone: "081919200602",
@@ -366,6 +366,16 @@ export const initialGuestbook: GuestbookEntry[] = [
 ];
 
 export const themes: Record<ThemeKey, ThemeConfig> = {
+  spiderman: {
+    name: "Spider-Verse (Earth-1610)",
+    subtitle: "Spider Crimson, Web Blue & Bio-Electric",
+    primary: "#ef4444",
+    secondary: "#0284c7",
+    accent: "#facc15",
+    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(239,68,68,0.30), rgba(2,132,199,0.22), rgba(5,7,15,1))",
+    glowColor: "rgba(239,68,68,0.45)",
+    badgeBg: "from-red-600 via-rose-600 to-blue-600"
+  },
   cyberpunk: {
     name: "Cyberpunk Neon",
     subtitle: "Sci-Fi & Modern Tech",

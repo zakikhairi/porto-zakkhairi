@@ -232,7 +232,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
               {/* Glassmorphic Card Shell - Butter Smooth: High-contrast Dark Glass with zero GPU blur-lag */}
               <div className={`relative rounded-3xl p-4 sm:p-5 transition-colors duration-300 ${
                 isCenter
-                  ? 'bg-slate-900/95 border border-white/25 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)] ring-1 ring-cyan-500/20'
+                  ? 'bg-slate-900/95 border border-red-500/30 shadow-[0_20px_50px_-10px_rgba(239,68,68,0.2)] ring-1 ring-red-500/40'
                   : 'bg-[#0a0f1d]/90 border border-white/10 shadow-xl'
               }`}>
                 {/* Poster Container */}
@@ -340,7 +340,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
         <button
           type="button"
           onClick={handlePrev}
-          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/85 hover:bg-pink-600 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 z-40 cursor-pointer shadow-xl active:scale-95"
+          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/85 hover:bg-red-600 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 z-40 cursor-pointer shadow-xl active:scale-95"
           title="Karya Sebelumnya (←)"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -349,7 +349,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
         <button
           type="button"
           onClick={handleNext}
-          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/85 hover:bg-pink-600 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 z-40 cursor-pointer shadow-xl active:scale-95"
+          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/85 hover:bg-red-600 text-white flex items-center justify-center border border-white/20 transition-all hover:scale-110 z-40 cursor-pointer shadow-xl active:scale-95"
           title="Karya Berikutnya (→)"
         >
           <ChevronRight className="w-5 h-5" />
@@ -360,7 +360,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
       {/* FLOATING GLASSY DOCK / MEDIA PLAYER BAR (Identical to TikTok Reference)   */}
       {/* ========================================================================= */}
       <div className="mt-4 flex justify-center px-4">
-        <div className="w-full max-w-xl rounded-full bg-slate-900/90 backdrop-blur-xl border border-white/20 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.8)] px-3.5 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="w-full max-w-xl rounded-full bg-slate-900/90 backdrop-blur-xl border border-red-500/30 shadow-[0_15px_40px_-10px_rgba(239,68,68,0.2)] px-3.5 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Left Media Controls: Prev, Play/Pause Autoplay, Next */}
           <div className="flex items-center gap-1 sm:gap-2">
@@ -381,7 +381,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
               }}
               className={`w-9 h-9 rounded-full flex items-center justify-center text-white transition-all shadow-md cursor-pointer active:scale-90 ${
                 isAutoplay
-                  ? 'bg-pink-500 ring-2 ring-pink-400/50 scale-105'
+                  ? 'bg-red-600 ring-2 ring-red-400/60 scale-105 shadow-red-500/40'
                   : 'bg-white/15 hover:bg-white/25 border border-white/20 hover:scale-105'
               }`}
               title={isAutoplay ? 'Jeda Putar Otomatis' : 'Putar Otomatis (Reel Mode)'}
@@ -434,7 +434,7 @@ export const GlassyProjectsCarousel: React.FC<GlassyProjectsCarouselProps> = ({
                   key={i}
                   className={`w-0.5 h-3.5 rounded-full ${
                     isAutoplay 
-                      ? `${animClass} bg-gradient-to-t from-pink-500 to-cyan-400` 
+                      ? `${animClass} bg-gradient-to-t from-red-500 to-blue-400` 
                       : 'bg-slate-600 scale-y-25'
                   }`}
                 />

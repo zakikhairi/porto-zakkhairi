@@ -134,7 +134,11 @@ export function App() {
 
   const [themeKey, setThemeKey] = useState<ThemeKey>(() => {
     const saved = localStorage.getItem('portfolio_theme') as ThemeKey;
-    return saved && themes[saved] ? saved : 'cyberpunk';
+    if (!saved || saved === 'cyberpunk') {
+      localStorage.setItem('portfolio_theme', 'spiderman');
+      return 'spiderman';
+    }
+    return themes[saved] ? saved : 'spiderman';
   });
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
@@ -255,7 +259,7 @@ export function App() {
     setProjects(initialProjects);
     setSkills(initialSkills);
     setGuestbook(initialGuestbook);
-    setThemeKey('cyberpunk');
+    setThemeKey('spiderman');
     localStorage.clear();
   };
 
@@ -281,14 +285,29 @@ export function App() {
       {/* Interactive Cursor Ambient Glow Spotlight */}
       <SpotlightGlow glowColor={currentTheme.glowColor} />
 
-      {/* Grid Pattern Background Layer */}
+      {/* Spider-Verse Comic Halftone & Web Matrix Background */}
       <div 
-        className="pointer-events-none fixed inset-0 z-0 opacity-20"
+        className="pointer-events-none fixed inset-0 z-0 opacity-25"
         style={{
-          backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)`,
-          backgroundSize: '32px 32px'
+          backgroundImage: `radial-gradient(rgba(239, 68, 68, 0.2) 1px, transparent 1px), radial-gradient(rgba(2, 132, 199, 0.18) 1px, transparent 1px)`,
+          backgroundSize: '24px 24px, 48px 48px',
+          backgroundPosition: '0 0, 12px 12px'
         }}
       />
+
+      {/* Spider Web Corner Decals (Vector SVG, Zero Performance Cost) */}
+      <div className="pointer-events-none fixed top-0 left-0 w-44 h-44 opacity-25 z-0">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#ef4444" strokeWidth="0.8">
+          <path d="M 0 0 L 100 0 M 0 0 L 0 100 M 0 0 L 100 100 M 0 0 L 50 100 M 0 0 L 100 50" />
+          <path d="M 20 0 Q 20 20 0 20 M 40 0 Q 40 40 0 40 M 60 0 Q 60 60 0 60 M 80 0 Q 80 80 0 80 M 100 0 Q 100 100 0 100" />
+        </svg>
+      </div>
+      <div className="pointer-events-none fixed bottom-0 right-0 w-44 h-44 opacity-20 z-0 rotate-180">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#0284c7" strokeWidth="0.8">
+          <path d="M 0 0 L 100 0 M 0 0 L 0 100 M 0 0 L 100 100 M 0 0 L 50 100 M 0 0 L 100 50" />
+          <path d="M 20 0 Q 20 20 0 20 M 40 0 Q 40 40 0 40 M 60 0 Q 60 60 0 60 M 80 0 Q 80 80 0 80 M 100 0 Q 100 100 0 100" />
+        </svg>
+      </div>
 
       {/* Top Navbar */}
       <Navbar

@@ -270,6 +270,82 @@ class SoundController {
       // Audio handling
     }
   }
+
+  // Iconic Spider-Man Web-Shooter "THWIP!" sound effect
+  playWebThwip() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+
+      // 1. Air burst / pressurized fluid eject (Noise-like snap via modulated osc)
+      const oscSnap = this.ctx.createOscillator();
+      const gainSnap = this.ctx.createGain();
+      oscSnap.type = 'sawtooth';
+      oscSnap.frequency.setValueAtTime(3200, now);
+      oscSnap.frequency.exponentialRampToValueAtTime(380, now + 0.07);
+
+      gainSnap.gain.setValueAtTime(0.18, now);
+      gainSnap.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+      oscSnap.connect(gainSnap);
+      gainSnap.connect(this.ctx.destination);
+      oscSnap.start(now);
+      oscSnap.stop(now + 0.07);
+
+      // 2. High-velocity web filament whip sound
+      const oscWhip = this.ctx.createOscillator();
+      const gainWhip = this.ctx.createGain();
+      oscWhip.type = 'triangle';
+      oscWhip.frequency.setValueAtTime(1400, now + 0.015);
+      oscWhip.frequency.exponentialRampToValueAtTime(180, now + 0.09);
+
+      gainWhip.gain.setValueAtTime(0.2, now + 0.015);
+      gainWhip.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+      oscWhip.connect(gainWhip);
+      gainWhip.connect(this.ctx.destination);
+      oscWhip.start(now + 0.015);
+      oscWhip.stop(now + 0.09);
+    } catch {
+      // Audio handling
+    }
+  }
+
+  // Classic Spider-Sense tingle / tingling intuition chime
+  playSpiderSense() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      const freqs = [1046.5, 1318.5, 1567.98, 2093.0]; // C6 - E6 - G6 - C7 arpeggio
+
+      freqs.forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const start = now + idx * 0.035;
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, start);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.05, start + 0.12);
+
+        gain.gain.setValueAtTime(0.08, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.12);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.12);
+      });
+    } catch {
+      // Audio handling
+    }
+  }
 }
 
 export const sounds = new SoundController();

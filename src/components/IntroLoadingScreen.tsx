@@ -8,10 +8,10 @@ interface IntroLoadingScreenProps {
 }
 
 const STATUS_STEPS = [
-  { threshold: 0, text: 'MEMUAT ENGINE AUDIO & GRAFIS...' },
-  { threshold: 25, text: 'MENYIAPKAN LENSA & STORYTELLING...' },
+  { threshold: 0, text: 'MENGHUBUNGKAN MULTIVERSE EARTH-1610...' },
+  { threshold: 25, text: 'MENYIAPKAN LENSA & VISUAL STORYTELLING...' },
   { threshold: 55, text: 'MENGHUBUNGKAN SISTEM INFORMASI GUNADARMA...' },
-  { threshold: 82, text: 'FINALISASI RENDER & SINEMATOGRAFI...' },
+  { threshold: 82, text: 'KALIBRASI SPIDER-SENSE & 120 FPS ENGINE...' },
   { threshold: 98, text: 'ACTION! MEMBUKA PORTOFOLIO' }
 ];
 
@@ -182,13 +182,13 @@ export const IntroLoadingScreen: React.FC<IntroLoadingScreenProps> = ({
 
         {/* Cinematic Subtitles */}
         <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm text-slate-300 font-mono tracking-wider">
-          <Film className="w-3.5 h-3.5 text-pink-400" />
+          <Film className="w-3.5 h-3.5 text-red-400" />
           <span>DIRECTOR</span>
           <span className="text-slate-600">•</span>
-          <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+          <Terminal className="w-3.5 h-3.5 text-blue-400" />
           <span>PRODUCER</span>
           <span className="text-slate-600">•</span>
-          <span>TECH CREATIVE</span>
+          <span className="text-red-400">🕷️ SPIDER-TECH</span>
         </div>
 
         {/* Progress Section */}
@@ -196,27 +196,27 @@ export const IntroLoadingScreen: React.FC<IntroLoadingScreenProps> = ({
           {/* Percentage & Status Display */}
           <div className="flex items-center justify-between font-mono text-xs text-slate-400 px-1">
             <div className="flex items-center gap-2 overflow-hidden text-left">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
               <span className="text-[11px] sm:text-xs text-slate-300 truncate">
                 {statusText}
               </span>
             </div>
-            <span className="text-sm sm:text-base font-bold text-cyan-300 ml-2 font-mono">
+            <span className="text-sm sm:text-base font-bold text-red-400 ml-2 font-mono">
               {progress}%
             </span>
           </div>
 
           {/* Glowing Animated Progress Bar */}
-          <div className="relative h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-white/10 p-[1px] shadow-inner">
+          <div className="relative h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-red-500/30 p-[1px] shadow-inner">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 shadow-lg shadow-cyan-500/50 transition-all duration-75 ease-out"
+              className="h-full rounded-full bg-gradient-to-r from-red-600 via-rose-500 to-blue-500 shadow-lg shadow-red-500/50 transition-all duration-75 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           {/* Timecode Footer */}
           <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono pt-1">
-            <span>SCENE 01 / TAKE 01</span>
+            <span>EARTH-1610 // SECTOR BANTEN</span>
             <span>ROLLING SOUND & CAMERA</span>
           </div>
         </div>

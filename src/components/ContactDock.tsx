@@ -88,17 +88,18 @@ export const ContactDock: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center py-6 select-none">
       <div className="text-center mb-3">
-        <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 block">
-          Interactive Mechanical Keycap Dock:
+        <span className="text-[11px] font-mono uppercase tracking-widest text-red-400 block flex items-center justify-center gap-1.5">
+          <span>🕷️</span>
+          <span>Spider-Tech Mechanical Keycap Dock:</span>
         </span>
         <p className="text-xs text-slate-300 mt-0.5">
-          Arahkan kursor / sentuh huruf <span className="font-mono font-bold text-cyan-400">CONTACT</span> untuk membuka kanal resmi
+          Arahkan kursor / sentuh huruf <span className="font-mono font-bold text-red-400">C</span><span className="font-mono font-bold text-blue-400">O</span><span className="font-mono font-bold text-red-400">N</span><span className="font-mono font-bold text-blue-400">T</span><span className="font-mono font-bold text-red-400">A</span><span className="font-mono font-bold text-blue-400">C</span><span className="font-mono font-bold text-red-400">T</span> untuk membuka kanal resmi
         </p>
       </div>
 
       {/* 3D Dock Platform Shell */}
       <div 
-        className="relative px-3 sm:px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl flex items-center justify-center gap-1.5 sm:gap-2.5"
+        className="relative px-3 sm:px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-red-500/30 shadow-[0_20px_50px_rgba(239,68,68,0.15)] backdrop-blur-xl flex items-center justify-center gap-1.5 sm:gap-2.5"
         style={{ perspective: '900px' }}
         onMouseLeave={() => setHoveredIndex(null)}
       >
@@ -161,7 +162,7 @@ export const ContactDock: React.FC = () => {
                 target={item.url.startsWith('mailto:') ? undefined : '_blank'}
                 rel="noreferrer"
                 download={item.letter === 'T' && item.label === 'Unduh CV' ? 'CV_Muhammad_Zaki_Khairi.pdf' : undefined}
-                onClick={() => sounds.playClick()}
+                onClick={() => sounds.playWebThwip()}
                 aria-label={item.label}
                 className="relative block w-10 sm:w-12 h-11 sm:h-13 cursor-pointer outline-none touch-manipulation"
                 style={{
@@ -178,9 +179,9 @@ export const ContactDock: React.FC = () => {
                   style={{ background: item.glowColor }}
                 />
 
-                {/* ================= FRONT FACE: Dark Mechanical Letter ================= */}
+                {/* ================= FRONT FACE: Spider Mechanical Keycap Letter ================= */}
                 <div
-                  className="absolute inset-0 rounded-xl bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 border border-slate-500/50 shadow-[0_5px_15px_rgba(0,0,0,0.6)] flex items-center justify-center text-white font-mono font-black text-base sm:text-lg select-none"
+                  className="absolute inset-0 rounded-xl bg-gradient-to-b from-slate-800 via-slate-900 to-red-950/80 border border-red-500/40 shadow-[0_5px_15px_rgba(0,0,0,0.6)] flex items-center justify-center text-white font-mono font-black text-base sm:text-lg select-none"
                   style={{
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',

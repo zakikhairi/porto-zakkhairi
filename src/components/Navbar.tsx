@@ -36,13 +36,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const handleNavClick = () => {
-    sounds.playClick();
+    sounds.playWebThwip();
     setMobileMenuOpen(false);
   };
 
   // Secret 5-click on Brand Logo to unlock CMS on mobile/touch screens
   const handleBrandClick = () => {
-    sounds.playClick();
+    sounds.playWebThwip();
     const newCount = clickCount + 1;
     setClickCount(newCount);
     if (newCount >= 5) {
@@ -56,24 +56,24 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className="pointer-events-auto w-full max-w-4xl rounded-full glass-panel border border-white/10 px-4 sm:px-5 py-2.5 shadow-2xl flex items-center justify-between transition-all backdrop-blur-2xl">
+      <nav className="pointer-events-auto w-full max-w-4xl rounded-full glass-panel border border-red-500/20 px-4 sm:px-5 py-2.5 shadow-2xl flex items-center justify-between transition-all backdrop-blur-2xl">
         {/* Sleek Balanced Brand with secret multi-click unlock */}
         <button
           type="button"
           onClick={handleBrandClick}
-          title="Muhammad Zaki Khairi"
+          title="Muhammad Zaki Khairi • Spider-Tech"
           className="flex items-center gap-2.5 group shrink-0 cursor-pointer bg-transparent border-0 p-0 text-left"
         >
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-950/90 border border-cyan-500/40 p-1 shadow-md shadow-cyan-500/25 group-hover:scale-105 group-hover:border-cyan-400 group-hover:shadow-cyan-400/50 transition-all flex items-center justify-center backdrop-blur-md">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-950/90 border border-red-500/50 p-1 shadow-md shadow-red-500/25 group-hover:scale-105 group-hover:border-red-400 group-hover:shadow-red-500/50 transition-all flex items-center justify-center backdrop-blur-md">
             <img
               src="/custom-logo.png"
               alt="Logo ZK"
-              className="w-full h-full object-contain filter drop-shadow-[0_0_6px_rgba(0,118,254,0.7)] group-hover:drop-shadow-[0_0_10px_rgba(0,118,254,1)] transition-all"
+              className="w-full h-full object-contain filter drop-shadow-[0_0_6px_rgba(239,68,68,0.8)] group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,1)] transition-all"
             />
           </div>
           <div className="text-left">
-            <span className="font-bold text-sm text-white tracking-wide flex items-center gap-1 group-hover:text-cyan-300 transition">
-              zakikhairi <Sparkles className="w-3 h-3 text-pink-400" />
+            <span className="font-bold text-sm text-white tracking-wide flex items-center gap-1 group-hover:text-red-400 transition font-mono">
+              zakikhairi <span className="text-red-400 text-xs">🕷️</span>
             </span>
           </div>
         </button>
