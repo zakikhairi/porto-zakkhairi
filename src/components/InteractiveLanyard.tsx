@@ -396,22 +396,6 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
             </p>
           </div>
 
-          {/* Stats Bar */}
-          <div className="relative z-10 grid grid-cols-3 gap-1 py-2 px-3 rounded-xl bg-white/5 border border-white/10 text-center my-1 pointer-events-none select-none">
-            <div>
-              <div className="text-sm font-bold text-cyan-300">{profile.stats.projectsCount}+</div>
-              <div className="text-[10px] text-slate-400">Karya</div>
-            </div>
-            <div>
-              <div className="text-sm font-bold text-emerald-400">{profile.stats.gpa || "3.75"}</div>
-              <div className="text-[10px] text-slate-400">IPK</div>
-            </div>
-            <div>
-              <div className="text-sm font-bold text-amber-300">Juara 1</div>
-              <div className="text-[10px] text-slate-400">Film</div>
-            </div>
-          </div>
-
           {/* Quick Social Logos Row on Front of Card */}
           <div className="relative z-10 flex items-center justify-center gap-2.5 py-1">
             <a
@@ -548,7 +532,7 @@ export const InteractiveLanyard: React.FC<LanyardProps> = ({ profile }) => {
                 {profile.handle}
               </span>
               <span className="text-[11px] text-emerald-300 font-mono font-bold block truncate mt-0.5">
-                Univ. Gunadarma • IPK 3.75
+                S1 Sistem Informasi • Univ. Gunadarma
               </span>
               <span className="text-[11px] text-slate-400 font-mono block truncate">
                 {profile.email}
