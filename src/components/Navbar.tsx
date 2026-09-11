@@ -53,10 +53,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
     setTimeout(() => setClickCount(0), 3000);
   };
-
   return (
-    <header className="fixed top-3 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className="pointer-events-auto w-full max-w-5xl rounded-2xl md:rounded-full bg-[#09153d]/95 border-[3px] border-[#060e29] px-4 sm:px-6 py-2 shadow-[0_8px_25px_rgba(5,10,30,0.7)] flex items-center justify-between transition-all backdrop-blur-2xl comic-halftone-bg">
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#09153d]/98 border-b-[3px] border-[#0B1440] shadow-[0_4px_20px_rgba(5,10,30,0.6)] backdrop-blur-md">
+      <nav className="max-w-7xl mx-auto h-14 sm:h-16 px-4 sm:px-8 flex items-center justify-between">
         {/* Sleek Balanced Brand with secret multi-click unlock */}
         <button
           type="button"
@@ -207,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto fixed top-20 left-4 right-4 rounded-2xl glass-panel border border-white/15 p-4 shadow-2xl backdrop-blur-2xl flex flex-col space-y-2 md:hidden">
+        <div className="pointer-events-auto fixed top-14 sm:top-16 left-0 right-0 bg-[#09153d]/98 border-b-[3px] border-[#0B1440] p-4 shadow-2xl backdrop-blur-2xl flex flex-col space-y-2 md:hidden z-50">
           {navLinks.map((link) => (
             <a
               key={link.label}

@@ -13,7 +13,6 @@ import { CmsStudioModal } from './components/CmsStudioModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { CustomCursor } from './components/CustomCursor';
 import { IntroLoadingScreen } from './components/IntroLoadingScreen';
-import { MobileBottomNav } from './components/MobileBottomNav';
 import { initialProfile, initialProjects, initialSkills, initialGuestbook, themes } from './data/initialData';
 import type { ProfileData, Project, Skill, GuestbookEntry, ThemeKey } from './types/portfolio';
 import { sounds } from './utils/soundEffects';
@@ -150,7 +149,7 @@ export function App() {
   });
 
   // Cinematic Intro & Loading Screen on site opening
-  const [showIntro, setShowIntro] = useState<boolean>(true);
+  const [showIntro, setShowIntro] = useState<boolean>(false);
 
   const [isCmsOpen, setIsCmsOpen] = useState<boolean>(false);
 
@@ -390,8 +389,7 @@ export function App() {
       {/* Modern Custom Interactive Cursor Glow (Tahap 6) */}
       <CustomCursor />
 
-      {/* Floating Bottom Navigation Bar for Mobile Phones */}
-      <MobileBottomNav />
+      {/* Mobile bottom nav removed for comic theme layout */}
 
       {/* Floating Quick CMS Access Button (Only visible in secret Admin Mode) */}
       {isAdminMode && (

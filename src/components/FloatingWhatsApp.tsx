@@ -22,7 +22,7 @@ export const FloatingWhatsApp: React.FC<FloatingWhatsAppProps> = ({
 
   return (
     <div
-      className="fixed bottom-18 left-3 sm:bottom-6 sm:left-6 z-40 flex items-center gap-2 group animate-fadeIn"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 group animate-fadeIn"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

@@ -583,6 +583,117 @@
   }
 }
 
+/* Spider-Man Scroll Puller Effect (Upside down Spidey) */
+.spidey-puller {
+  position: fixed;
+  top: -100vh;
+  right: 5%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 45;
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.spidey-puller::before {
+  content: '';
+  width: 2px;
+  flex-grow: 1;
+  background: linear-gradient(to bottom, transparent 20%, rgba(255, 255, 255, 0.9) 100%);
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+.spidey-puller img {
+  width: clamp(120px, 14vw, 180px);
+  flex-shrink: 0;
+  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.6));
+}
+
+.spidey-puller.is-visible {
+  transform: translateY(100vh);
+}
+
+/* Authentic Interactive Mask Reveal Stage Photo */
+.stage__photo {
+  position: relative;
+  z-index: 2;
+  width: clamp(230px, 25vw, 310px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  --reveal-x: 50%;
+  --reveal-y: 50%;
+  --reveal-r: 0px;
+  cursor: crosshair;
+  user-select: none;
+}
+
+.stage__photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: linear-gradient(to bottom, transparent 75%, rgba(6, 14, 41, 0.95) 98%);
+}
+
+.stage__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}
+
+.stage__photo .mask-img {
+  z-index: 1;
+  transform: scale(1);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+}
+
+.stage__photo .real-img {
+  z-index: 2;
+  transform: scale(1);
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    #000 0,
+    #000 var(--reveal-r),
+    transparent calc(var(--reveal-r) + 20px),
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle at var(--reveal-x) var(--reveal-y),
+    #000 0,
+    #000 var(--reveal-r),
+    transparent calc(var(--reveal-r) + 20px),
+    transparent 100%
+  );
+  transition: opacity 0.2s ease, --reveal-r 0.08s ease-out;
+}
+
+.stage__photo.is-hovering-face .real-img,
+.stage__photo.is-active .real-img {
+  opacity: 1;
+  --reveal-r: 52px;
+}
+
+/* Spider-Man Logo Letter Lighting on Hover */
+.spidey-logo__bottom span.is-lit {
+  color: #ffffff;
+  -webkit-text-stroke: 2.5px #ed1d24;
+  text-shadow: 
+    0px 1px 0 #000, 0px 2px 0 #000, 0px 3px 0 #000, 0px 4px 0 #000,
+    0px 5px 0 #000, 0px 6px 0 #000, 0px 7px 0 #000, 0px 8px 0 #000,
+    0px 9px 0 #000, 0px 10px 0 #000,
+    0px 15px 12px rgba(0, 0, 0, 0.7);
+  transform: translateY(-0.1em) scale(1.12);
+}
+
 /* Spider-Man Hanging Upside Down Animation */
 @keyframes spideySwing {
   0%, 100% {
@@ -597,6 +708,3 @@
   transform-origin: top center;
   animation: spideySwing 4s ease-in-out infinite;
 }
-
-
-
