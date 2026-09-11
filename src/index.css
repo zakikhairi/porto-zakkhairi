@@ -392,11 +392,11 @@
   display: flex;
   align-items: flex-end;
   font-family: 'Anton', Impact, 'Arial Black', sans-serif;
-  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
   text-transform: uppercase;
   font-weight: 900;
-  letter-spacing: 0.03em;
-  transform: scale(0.92, 1.35);
+  letter-spacing: 0.02em;
+  transform: scale(0.92, 1.25);
 }
 
 .spidey-logo__bottom span {
@@ -569,15 +569,17 @@
 .spidey-hero-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.5rem;
+  gap: 1.25rem;
   align-items: center;
   width: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 @media (min-width: 1024px) {
   .spidey-hero-grid {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr) minmax(0, 0.95fr);
-    gap: 1.75rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+    gap: 1.25rem;
   }
 }
 
