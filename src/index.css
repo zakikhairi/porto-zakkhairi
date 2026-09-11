@@ -251,3 +251,17 @@
 .card-shine-container:hover::after {
   transform: translateX(100%);
 }
+
+/* GPU Accelerated Equalizer Animation */
+@keyframes eqScale {
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(1); }
+}
+
+.animate-eq-1 { animation: eqScale 0.7s ease-in-out infinite; transform-origin: bottom; }
+.animate-eq-2 { animation: eqScale 0.9s ease-in-out infinite 0.15s; transform-origin: bottom; }
+.animate-eq-3 { animation: eqScale 0.6s ease-in-out infinite 0.3s; transform-origin: bottom; }
+.animate-eq-4 { animation: eqScale 0.8s ease-in-out infinite 0.1s; transform-origin: bottom; }
+.animate-eq-5 { animation: eqScale 1.0s ease-in-out infinite 0.25s; transform-origin: bottom; }
+.animate-eq-6 { animation: eqScale 0.75s ease-in-out infinite 0.4s; transform-origin: bottom; }
+
