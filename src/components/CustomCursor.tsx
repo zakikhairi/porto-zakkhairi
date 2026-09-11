@@ -91,13 +91,12 @@ export const CustomCursor: React.FC = () => {
         ref={auraRef}
         style={{
           transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)',
-          willChange: 'transform, width, height',
-          transition: 'width 0.2s cubic-bezier(0.25, 1, 0.5, 1), height 0.2s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s ease, background-color 0.2s ease',
+          willChange: 'transform',
         }}
-        className={`fixed rounded-full pointer-events-none ${
+        className={`fixed w-8 h-8 rounded-full pointer-events-none transition-all duration-200 ease-out ${
           isHovered
-            ? 'w-12 h-12 bg-cyan-400/20 border border-cyan-400/80 shadow-[0_0_20px_rgba(6,182,212,0.45)]'
-            : 'w-7 h-7 bg-pink-500/15 border border-pink-400/40 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
+            ? 'scale-150 bg-cyan-400/20 border border-cyan-400/80 shadow-[0_0_20px_rgba(6,182,212,0.45)]'
+            : 'scale-90 bg-pink-500/15 border border-pink-400/40 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
         }`}
       />
 

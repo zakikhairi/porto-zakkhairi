@@ -17,7 +17,7 @@ import type { ProfileData, Project, Skill, GuestbookEntry, ThemeKey } from './ty
 import { sounds } from './utils/soundEffects';
 import { Sliders, Sparkles } from 'lucide-react';
 
-// Isolated high-performance spotlight glow to prevent re-rendering root App on mousemove
+// Isolated GPU-accelerated spotlight glow (moves hardware texture via translate3d, zero paint cost)
 const SpotlightGlow = memo(({ glowColor }: { glowColor: string }) => {
   const spotlightRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +27,7 @@ const SpotlightGlow = memo(({ glowColor }: { glowColor: string }) => {
       if (!ticking) {
         requestAnimationFrame(() => {
           if (spotlightRef.current) {
-            spotlightRef.current.style.background = `radial-gradient(650px at ${e.clientX}px ${e.clientY}px, ${glowColor}, transparent 80%)`;
+            spotlightRef.current.style.transform = `translate3d(${e.clientX - 325}px, ${e.clientY - 325}px, 0)`;
           }
           ticking = false;
         });
@@ -37,14 +37,15 @@ const SpotlightGlow = memo(({ glowColor }: { glowColor: string }) => {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [glowColor]);
+  }, []);
 
   return (
     <div
       ref={spotlightRef}
-      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 will-change-[background]"
+      className="pointer-events-none fixed top-0 left-0 w-[650px] h-[650px] rounded-full z-30 opacity-35 transition-opacity duration-300 will-change-transform"
       style={{
-        background: `radial-gradient(650px at 50% 50%, ${glowColor}, transparent 80%)`
+        background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
+        transform: 'translate3d(-325px, -325px, 0)'
       }}
     />
   );

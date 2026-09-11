@@ -303,19 +303,15 @@ export const HeroSection: React.FC<HeroProps> = ({ profile, onOpenViewfinder }) 
                 </div>
               </div>
 
-              {/* Animated Equalizer Bars */}
-              <div className="flex items-end gap-1 h-6 pr-2">
-                {[12, 18, 14, 22, 13, 17, 10].map((_, i) => (
+              {/* Animated Equalizer Bars (GPU Accelerated) */}
+              <div className="flex items-end gap-1 h-5 pr-2">
+                {['animate-eq-1', 'animate-eq-2', 'animate-eq-3', 'animate-eq-4', 'animate-eq-5', 'animate-eq-6', 'animate-eq-2'].map((animClass, i) => (
                   <div
                     key={i}
-                    style={{
-                      height: isPlayingLofi ? `${Math.floor(Math.random() * 16 + 6)}px` : '4px',
-                      transition: 'height 0.2s ease-in-out'
-                    }}
-                    className={`w-1 rounded-full ${
+                    className={`w-1 h-4 rounded-full ${
                       isPlayingLofi
-                        ? 'bg-gradient-to-t from-cyan-400 to-pink-400'
-                        : 'bg-slate-700'
+                        ? `${animClass} bg-gradient-to-t from-cyan-400 to-pink-400`
+                        : 'bg-slate-700 scale-y-25'
                     }`}
                   />
                 ))}

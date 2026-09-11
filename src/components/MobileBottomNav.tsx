@@ -21,23 +21,27 @@ export const MobileBottomNav: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('about');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
-      for (const item of NAV_ITEMS) {
-        const el = document.getElementById(item.id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(item.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
             break;
           }
         }
+      },
+      {
+        rootMargin: '-20% 0px -50% 0px',
+        threshold: 0.1
       }
-    };
+    );
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    for (const item of NAV_ITEMS) {
+      const el = document.getElementById(item.id);
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {

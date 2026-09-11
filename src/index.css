@@ -9,6 +9,11 @@
     --bg-dark: #0a0c16;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
   html, body {
     background-color: var(--bg-dark);
     color: #f3f4f6;
@@ -67,20 +72,23 @@
   background: linear-gradient(to bottom, #a855f7, #3b82f6);
 }
 
-/* Glassmorphism Classes */
+/* Glassmorphism Classes - GPU Accelerated & Buttery Smooth */
 .glass-panel {
-  background: rgba(18, 22, 38, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(18, 22, 38, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateZ(0);
 }
 
 .glass-card {
-  background: rgba(26, 31, 56, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(26, 31, 56, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .glass-card:hover {
