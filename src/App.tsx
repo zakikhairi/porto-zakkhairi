@@ -37,7 +37,7 @@ const SpotlightGlow = memo(({ glowColor }: { glowColor: string }) => {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [glowColor]);
 
   return (
     <div
