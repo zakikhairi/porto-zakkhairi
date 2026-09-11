@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Palette, Menu, X, Sparkles, Camera, Sliders } from 'lucide-react';
+import { Volume2, VolumeX, Palette, Menu, X, Sparkles, Sliders } from 'lucide-react';
 import type { ThemeKey } from '../types/portfolio';
 import { themes } from '../data/initialData';
 import { sounds } from '../utils/soundEffects';
@@ -12,7 +12,6 @@ interface NavbarProps {
   onOpenCms: () => void;
   isAdminMode?: boolean;
   onToggleAdmin?: () => void;
-  onOpenViewfinder?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -23,7 +22,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenCms,
   isAdminMode = false,
   onToggleAdmin,
-  onOpenViewfinder
 }) => {
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -94,24 +92,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
         </div>
 
-        {/* Action Controls (Viewfinder, Theme, Sound, CMS Button) */}
+        {/* Action Controls (Theme, Sound, CMS Button) */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Director's Viewfinder Mode Button */}
-          {onOpenViewfinder && (
-            <button
-              type="button"
-              onClick={() => {
-                onOpenViewfinder();
-                sounds.playCameraShutter();
-              }}
-              title="Mode Sutradara / Viewfinder Bioskop"
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 hover:text-white transition cursor-pointer text-xs font-mono font-bold shadow-md hover:scale-105 active:scale-95"
-            >
-              <Camera className="w-3.5 h-3.5 text-red-400 animate-pulse" />
-              <span className="hidden sm:inline">Viewfinder</span>
-            </button>
-          )}
-
           {/* Sound Toggle */}
           <button
             onClick={() => {
