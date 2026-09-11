@@ -55,8 +55,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className="pointer-events-auto w-full max-w-4xl rounded-full glass-panel border border-red-500/20 px-4 sm:px-5 py-2.5 shadow-2xl flex items-center justify-between transition-all backdrop-blur-2xl">
+    <header className="fixed top-3 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <nav className="pointer-events-auto w-full max-w-5xl rounded-2xl md:rounded-full bg-[#09153d]/95 border-[3px] border-[#060e29] px-4 sm:px-6 py-2 shadow-[0_8px_25px_rgba(5,10,30,0.7)] flex items-center justify-between transition-all backdrop-blur-2xl comic-halftone-bg">
         {/* Sleek Balanced Brand with secret multi-click unlock */}
         <button
           type="button"
@@ -64,11 +64,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           title="Muhammad Zaki Khairi • Spider-Tech"
           className="flex items-center gap-2.5 group shrink-0 cursor-pointer bg-transparent border-0 p-0 text-left"
         >
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-950/90 border border-red-500/50 p-1 shadow-md shadow-red-500/25 group-hover:scale-105 group-hover:border-red-400 group-hover:shadow-red-500/50 transition-all flex items-center justify-center backdrop-blur-md">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#060e29] border-2 border-[#e62429] p-1 shadow-md shadow-red-500/25 group-hover:scale-105 group-hover:border-red-400 group-hover:shadow-red-500/50 transition-all flex items-center justify-center">
             <img
               src="/custom-logo.png"
               alt="Logo ZK"
-              className="w-full h-full object-contain filter drop-shadow-[0_0_6px_rgba(239,68,68,0.8)] group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,1)] transition-all"
+              className="w-full h-full object-contain filter drop-shadow-[0_0_6px_rgba(239,68,68,0.9)] group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,1)] transition-all"
             />
           </div>
           <div className="text-left">
@@ -78,21 +78,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Desktop Navigation Links (Balanced Font & Comfortable Spacing) */}
-        <div className="hidden md:flex items-center space-x-1">
+        {/* Desktop Navigation Links (Comic Space Grotesk & Tracking) */}
+        <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={handleNavClick}
-              className="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-medium text-slate-300 hover:text-white hover:bg-white/10 transition"
+              className="px-3 py-1 font-space font-bold text-xs lg:text-sm tracking-[0.18em] uppercase text-white/85 hover:text-white hover:bg-white/10 rounded-lg transition"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* Action Controls (Theme, Sound, CMS Button) */}
+        {/* Action Controls (Theme, Sound, CMS Button, Red Comic Contact Button) */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Sound Toggle */}
           <button
@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               sounds.playClick();
             }}
             title={soundEnabled ? "Nonaktifkan Efek Suara" : "Aktifkan Efek Suara"}
-            className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition cursor-pointer"
           >
             {soundEnabled ? (
               <Volume2 className="w-4 h-4 text-emerald-400" />
@@ -118,9 +118,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 sounds.playClick();
               }}
               title="Ganti Atmosfer Warna"
-              className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition flex items-center cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition flex items-center cursor-pointer"
             >
-              <Palette className="w-4 h-4 text-pink-400" />
+              <Palette className="w-4 h-4 text-red-400" />
             </button>
 
             {themeDropdownOpen && (
@@ -142,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition cursor-pointer ${
                           isActive
-                            ? 'bg-gradient-to-r from-purple-600/40 to-pink-600/30 text-white font-bold border border-purple-500/50 shadow-md'
+                            ? 'bg-gradient-to-r from-red-600/50 to-blue-600/40 text-white font-bold border border-red-500/50 shadow-md'
                             : 'text-slate-300 hover:bg-white/10 hover:text-white'
                         }`}
                       >
@@ -158,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                             )}
                           </div>
                         </div>
-                        {isActive && <span className="text-cyan-400 text-xs font-bold ml-1">✓</span>}
+                        {isActive && <span className="text-red-400 text-xs font-bold ml-1">✓</span>}
                       </button>
                     );
                   })}
@@ -166,6 +166,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             )}
           </div>
+
+          {/* Red Comic Contact Button (Exact Match to TikTok Reference) */}
+          <a
+            href="#contact"
+            onClick={handleNavClick}
+            className="hidden sm:flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 bg-[#E5231B] hover:bg-[#ff3338] text-white font-anton uppercase italic tracking-widest text-xs sm:text-sm border-2 border-[#0B1440] comic-shadow hover:translate-y-[1px] active:translate-y-[3px] active:shadow-none transition cursor-pointer shrink-0"
+          >
+            <span>KONTAK</span>
+            <span className="text-xs not-italic">→</span>
+          </a>
 
           {/* CMS Admin Button (Only visible in secret Admin Mode) */}
           {isAdminMode && (

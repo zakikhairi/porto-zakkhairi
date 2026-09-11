@@ -71,16 +71,16 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
   return (
     <section id="projects" className="py-20 px-4 max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-mono">
+      <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/90 border-2 border-[#0B1440] text-red-400 text-xs font-mono shadow-[2px_2px_0px_#0B1440]">
           <FolderGit2 className="w-3.5 h-3.5" />
-          <span>Showcase Unggulan</span>
+          <span>// SHOWCASE ISSUE #01</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-          Proyek Terpilih & Eksperimen
+        <h2 className="text-3xl sm:text-5xl font-anton text-white tracking-wide uppercase spidey-text-3d">
+          PROYEK TERPILIH & SINEMA
         </h2>
-        <p className="text-slate-400 text-sm">
-          Koleksi karya film sinematik, karya fotografi peraih juara, web aplikasi interaktif, dan sistem TI.
+        <p className="text-slate-300 text-sm">
+          Koleksi film sinematik 'TANAH JAWARA', karya peraih Juara 1 'PLUS MINUS', fotografi Baduy, serta aplikasi sistem TI.
         </p>
 
         {/* Filter Buttons & View Mode Switcher */}
@@ -93,10 +93,10 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                   setActiveFilter(filter.id as typeof activeFilter);
                   sounds.playClick();
                 }}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-anton uppercase italic tracking-wider transition cursor-pointer ${
                   activeFilter === filter.id
-                    ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-purple-500/25'
-                    : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/5'
+                    ? 'bg-[#e62429] text-white border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440]'
+                    : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border-2 border-[#0B1440]'
                 }`}
               >
                 {filter.label}
@@ -105,16 +105,16 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
           </div>
 
           {/* View Mode Switcher: 3D Deck (TikTok Style) vs Grid */}
-          <div className="flex items-center p-1 rounded-2xl bg-slate-900/90 border border-white/15 backdrop-blur-md shadow-lg shrink-0">
+          <div className="flex items-center p-1 rounded-xl bg-slate-950/90 border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] shrink-0">
             <button
               type="button"
               onClick={() => {
                 setViewMode('carousel');
                 sounds.playClick();
               }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-anton uppercase italic tracking-wider transition-all cursor-pointer ${
                 viewMode === 'carousel'
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                  ? 'bg-[#1e5fb0] text-white'
                   : 'text-slate-400 hover:text-white'
               }`}
               title="Tampilan 3D Glassy Deck (ala TikTok UI)"
@@ -129,9 +129,9 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
                 setViewMode('grid');
                 sounds.playClick();
               }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-anton uppercase italic tracking-wider transition-all cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                  ? 'bg-[#1e5fb0] text-white'
                   : 'text-slate-400 hover:text-white'
               }`}
               title="Tampilan Grid Galeri Klasik"

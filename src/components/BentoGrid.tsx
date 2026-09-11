@@ -198,16 +198,16 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ skills, profile }) => {
   return (
     <section id="bento" className="py-20 px-4 max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+      <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/90 border-2 border-[#0B1440] text-cyan-300 text-xs font-mono shadow-[2px_2px_0px_#0B1440]">
           <Layers className="w-3.5 h-3.5" />
-          <span>Interactive Bento Matrix</span>
+          <span>// SPIDEY TECH LAB & PLAYGROUND</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-          Keahlian, Aktivitas & Playground
+        <h2 className="text-3xl sm:text-5xl font-anton text-white tracking-wide uppercase spidey-text-3d">
+          KEAHLIAN, AKTIVITAS & ARCADE
         </h2>
-        <p className="text-slate-400 text-sm">
-          Semua modul di bawah ini dapat berinteraksi langsung. Uji terminal, mainkan game ular retro, dan telusuri keahlian.
+        <p className="text-slate-300 text-sm">
+          Semua modul di bawah ini dapat berinteraksi langsung. Uji terminal interaktif, mainkan game ular retro, dan telusuri keahlian.
         </p>
       </div>
 

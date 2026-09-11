@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, Play, Pause, Music2, Terminal, Download, CheckCircle2, GraduationCap } from 'lucide-react';
+import { ArrowRight, MessageSquare, Play, Pause, Music2, Terminal, Download, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { ProfileData } from '../types/portfolio';
 import { InteractiveLanyard } from './InteractiveLanyard';
@@ -91,250 +91,297 @@ export const HeroSection: React.FC<HeroProps> = ({ profile }) => {
   };
 
   return (
-    <section id="about" className="relative min-h-[calc(100vh-4.5rem)] pt-20 pb-6 px-4 flex items-center justify-center overflow-hidden">
-      {/* Dynamic Animated Color Glows in the background */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-gradient-to-tr from-pink-600/25 via-purple-600/25 to-cyan-500/25 rounded-full blur-[120px] pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/2 left-10 w-[260px] h-[260px] bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[300px] h-[300px] bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
+    <section id="about" className="relative min-h-[calc(100vh-4rem)] pt-16 pb-0 flex flex-col justify-between overflow-hidden">
+      {/* Dynamic Animated Spider-Verse Ambient Glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-gradient-to-tr from-red-600/30 via-blue-600/25 to-yellow-500/20 rounded-full blur-[130px] pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/2 left-10 w-[280px] h-[280px] bg-blue-700/25 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[300px] h-[300px] bg-red-600/20 rounded-full blur-[110px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-        {/* Left Column: Introduction & Interactive CTA */}
-        <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 sm:space-y-4.5">
-          {/* Status Badges */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-emerald-500/30 shadow-lg shadow-emerald-500/10 backdrop-blur-md">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-semibold text-emerald-300">
-                {profile.status}
-              </span>
-            </div>
-
-            <a
-              href="#experience"
-              onClick={() => sounds.playClick()}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-mono transition"
-            >
-              <span>🎓 Gunadarma • IPK 3.75</span>
-            </a>
-          </div>
-
-          {/* Main Headline (Prominent, Bold & Balanced) */}
-          <div className="space-y-1.5 w-full select-none cursor-default">
-            <h2 className="text-slate-400 font-mono text-xs sm:text-sm uppercase tracking-widest flex items-center justify-center lg:justify-start gap-2">
-              <Terminal className="w-4 h-4 text-cyan-400" />
-              <span>Halo Semua, Saya {profile.name}</span>
-            </h2>
-            <div className="min-h-[3.25rem] sm:min-h-[4rem] flex items-center justify-center lg:justify-start overflow-hidden">
-              <h1 className={`text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-tight transition-all duration-300 ${
-                isFading ? 'opacity-0 -translate-y-1' : 'opacity-100 translate-y-0'
-              }`}>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400">
-                  {ROLE_ITEMS[roleIndex].title}
-                </span>
-              </h1>
-            </div>
-          </div>
-
-          {/* Subtext (Dynamically Synchronized with Headline Above) */}
-          <div className={`transition-all duration-300 min-h-[3.5rem] sm:min-h-[3.75rem] flex items-center select-none cursor-default ${
-            isFading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
-          }`}>
-            <p className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed">
-              {ROLE_ITEMS[roleIndex].bio}
-            </p>
-          </div>
-
-          {/* Action Buttons (Responsive 2x2 Grid on Mobile, Flex on Desktop) */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-2.5 pt-1 w-full max-w-sm sm:max-w-none">
-            <a
-              href="#projects"
-              onClick={() => sounds.playWebThwip()}
-              className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-blue-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-500/25 hover:shadow-red-500/45 hover:scale-105 active:scale-95 transition cursor-pointer text-center"
-            >
-              <span>Jelajahi Proyek</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </a>
-
-            {/* Interactive CV Download Button */}
-            <button
-              onClick={handleDownloadCv}
-              className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer shadow-md text-center ${
-                cvDownloaded
-                  ? 'bg-emerald-500 text-slate-950 scale-105 shadow-emerald-500/30'
-                  : 'bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 hover:text-white hover:scale-105'
-              }`}
-            >
-              {cvDownloaded ? (
-                <>
-                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-950" />
-                  <span>Diunduh!</span>
-                </>
-              ) : (
-                <>
-                  <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 animate-bounce" />
-                  <span>Unduh CV</span>
-                </>
-              )}
-            </button>
-
-            <a
-              href="#experience"
-              onClick={() => sounds.playClick()}
-              className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl glass-card text-white font-semibold text-xs sm:text-sm hover:border-cyan-500/40 hover:scale-105 transition text-center"
-            >
-              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
-              <span>Resume</span>
-            </a>
-
-            <a
-              href="#guestbook"
-              onClick={() => sounds.playClick()}
-              className="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl glass-card text-white font-semibold text-xs sm:text-sm hover:border-pink-500/40 hover:scale-105 transition text-center"
-            >
-              <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-pink-400" />
-              <span>Buku Tamu</span>
-            </a>
-          </div>
-
-          {/* Official Social Media Channels (with Official Logos) */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
-            <span className="text-xs font-mono text-slate-400 mr-1 flex items-center">
-              Sosmed:
-            </span>
-
-            {/* Instagram */}
-            <a
-              href={profile.socials.instagram}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => sounds.playClick()}
-              title="Instagram: @zakkhairi_"
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card border border-pink-500/20 hover:border-pink-500/60 hover:bg-pink-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm"
-            >
-              <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
-                @zakkhairi_
-              </span>
-            </a>
-
-            {/* TikTok */}
-            <a
-              href={profile.socials.tiktok}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => sounds.playClick()}
-              title="TikTok: @_iniizaki"
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card border border-cyan-500/20 hover:border-cyan-500/60 hover:bg-cyan-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm"
-            >
-              <TiktokIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
-                @_iniizaki
-              </span>
-            </a>
-
-            {/* YouTube */}
-            <a
-              href={profile.socials.youtube || "https://www.youtube.com/@zakkhairi"}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => sounds.playClick()}
-              title="YouTube: @zakkhairi"
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card border border-red-500/20 hover:border-red-500/60 hover:bg-red-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm"
-            >
-              <YoutubeIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
-                YouTube
-              </span>
-            </a>
-
-            {/* GitHub */}
-            <a
-              href={profile.socials.github}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => sounds.playClick()}
-              title="GitHub: @zakikhairi"
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card border border-purple-500/20 hover:border-purple-500/60 hover:bg-purple-500/10 hover:scale-105 active:scale-95 transition-all shadow-sm"
-            >
-              <GithubIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
-                GitHub
-              </span>
-            </a>
-          </div>
-
-          {/* Mini Lo-Fi Beat Widget */}
-          <div className="pt-1 w-full max-w-sm">
-            <div className="glass-card rounded-2xl p-2.5 border border-white/10 flex items-center justify-between shadow-md">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={toggleMusic}
-                  className="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white shadow-md hover:scale-105 transition cursor-pointer"
-                >
-                  {isPlayingLofi ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
-                </button>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <Music2 className="w-3.5 h-3.5 text-pink-400" />
-                    <span className="text-xs font-bold text-white">Lo-Fi Coding Vibe</span>
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    {isPlayingLofi ? 'Memutar Suasana Fokus • 84 BPM' : 'Putar musik fokus'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Animated Equalizer Bars (GPU Accelerated) */}
-              <div className="flex items-end gap-1 h-5 pr-2">
-                {['animate-eq-1', 'animate-eq-2', 'animate-eq-3', 'animate-eq-4', 'animate-eq-5', 'animate-eq-6', 'animate-eq-2'].map((animClass, i) => (
-                  <div
-                    key={i}
-                    className={`w-1 h-4 rounded-full ${
-                      isPlayingLofi
-                        ? `${animClass} bg-gradient-to-t from-cyan-400 to-pink-400`
-                        : 'bg-slate-700 scale-y-25'
-                    }`}
-                  />
-                ))}
-              </div>
+      {/* Main Container */}
+      <div className="relative z-10 max-w-6xl w-full mx-auto px-4 flex flex-col items-center flex-1 justify-center">
+        {/* Marvel Spider-Man Arched Display Logo */}
+        <div className="w-full flex flex-col items-center justify-center pt-2 pb-5 sm:pb-7 select-none">
+          <div className="spidey-logo">
+            <div className="spidey-logo__top">MY</div>
+            <div className="spidey-logo__bottom">
+              <span className="spidey-l-1">P</span>
+              <span className="spidey-l-2">O</span>
+              <span className="spidey-l-3">R</span>
+              <span className="spidey-l-4">T</span>
+              <span className="spidey-l-5">O</span>
+              <span className="spidey-l-dash">-</span>
+              <span className="spidey-l-6">F</span>
+              <span className="spidey-l-7">O</span>
+              <span className="spidey-l-8">L</span>
+              <span className="spidey-l-9">I</span>
+              <span className="spidey-l-10">O</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: 3D Lanyard Interactive Badge with Floating Badges */}
-        <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-          {/* Top Left Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-red-500/50 text-red-300 text-xs font-semibold shadow-xl shadow-red-500/20 backdrop-blur-md absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
-            <span className="text-base">🕷️</span>
-            <span>Spider-Sense Active</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-red-600/40 text-red-200 font-mono font-bold">100%</span>
+        {/* Hero Two Columns Grid */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+          {/* Left Column: Comic Headline & Actions */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3 sm:space-y-4">
+            {/* Status & Uni Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/90 border-2 border-[#0B1440] shadow-[2px_2px_0px_#0B1440]">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-[11px] font-semibold text-emerald-300">
+                  {profile.status}
+                </span>
+              </div>
+
+              <a
+                href="#experience"
+                onClick={() => sounds.playClick()}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/90 hover:bg-blue-900 border-2 border-[#0B1440] text-cyan-300 text-[11px] font-mono shadow-[2px_2px_0px_#0B1440] transition"
+              >
+                <span>🎓 Gunadarma • IPK 3.75</span>
+              </a>
+            </div>
+
+            {/* Intro Eyebrow & Hero Comic Name */}
+            <div className="space-y-1 w-full select-none cursor-default">
+              <p className="font-mono text-xs sm:text-sm text-cyan-300 tracking-widest uppercase flex items-center justify-center lg:justify-start gap-2">
+                <Terminal className="w-4 h-4 text-cyan-400" />
+                <span>// hello, saya</span>
+              </p>
+              
+              <h1 className="font-bungee text-4xl sm:text-5xl lg:text-[54px] text-white spidey-text-3d leading-[1.08] tracking-wide my-1 transition-all duration-300">
+                M.<br />
+                ZAKI<br />
+                KHAIRI
+              </h1>
+            </div>
+
+            {/* Dynamic Role & Narrative Caption Box */}
+            <div className="border-l-4 border-[#e62429] bg-gradient-to-r from-red-600/25 via-blue-900/25 to-slate-900/40 p-3 sm:p-3.5 rounded-r-xl max-w-xl my-1 border-y border-r border-[#0B1440] shadow-[3px_3px_0px_#0B1440] backdrop-blur-md">
+              <p className="font-mono text-xs sm:text-sm text-yellow-300 font-bold mb-1 flex items-center justify-center lg:justify-start gap-2">
+                <span>{ROLE_ITEMS[roleIndex].title}</span>
+              </p>
+              <p className={`text-xs sm:text-sm text-slate-200 leading-relaxed transition-all duration-300 ${
+                isFading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
+              }`}>
+                {ROLE_ITEMS[roleIndex].bio}
+              </p>
+            </div>
+
+            {/* Comic Neo-Brutalist Action Buttons */}
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1 w-full max-w-sm sm:max-w-none">
+              <a
+                href="#projects"
+                onClick={() => sounds.playWebThwip()}
+                className="comic-btn-red"
+              >
+                <span>PROYEK</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
+              <a
+                href="#experience"
+                onClick={() => sounds.playClick()}
+                className="comic-btn-blue"
+              >
+                <span>TENTANG SAYA</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
+              {/* Interactive CV Download Button */}
+              <button
+                onClick={handleDownloadCv}
+                className="comic-btn-dark cursor-pointer"
+              >
+                {cvDownloaded ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-300">DIUNDUH!</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 text-cyan-400 animate-bounce" />
+                    <span>UNDUH CV</span>
+                  </>
+                )}
+              </button>
+
+              <a
+                href="#guestbook"
+                onClick={() => sounds.playClick()}
+                className="comic-btn-dark"
+              >
+                <MessageSquare className="w-4 h-4 text-pink-400" />
+                <span>BUKU TAMU</span>
+              </a>
+            </div>
+
+            {/* Official Social Media Channels */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+              <span className="text-xs font-mono text-slate-300 mr-1 flex items-center">
+                Sosmed:
+              </span>
+
+              {/* Instagram */}
+              <a
+                href={profile.socials.instagram}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => sounds.playClick()}
+                title="Instagram: @zakkhairi_"
+                className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border-2 border-[#0B1440] shadow-[2px_2px_0px_#0B1440] hover:border-pink-500 hover:bg-pink-500/20 hover:scale-105 active:scale-95 transition-all"
+              >
+                <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
+                  @zakkhairi_
+                </span>
+              </a>
+
+              {/* TikTok */}
+              <a
+                href={profile.socials.tiktok}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => sounds.playClick()}
+                title="TikTok: @_iniizaki"
+                className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border-2 border-[#0B1440] shadow-[2px_2px_0px_#0B1440] hover:border-cyan-500 hover:bg-cyan-500/20 hover:scale-105 active:scale-95 transition-all"
+              >
+                <TiktokIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
+                  @_iniizaki
+                </span>
+              </a>
+
+              {/* YouTube */}
+              <a
+                href={profile.socials.youtube || "https://www.youtube.com/@zakkhairi"}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => sounds.playClick()}
+                title="YouTube: @zakkhairi"
+                className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border-2 border-[#0B1440] shadow-[2px_2px_0px_#0B1440] hover:border-red-500 hover:bg-red-500/20 hover:scale-105 active:scale-95 transition-all"
+              >
+                <YoutubeIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
+                  YouTube
+                </span>
+              </a>
+
+              {/* GitHub */}
+              <a
+                href={profile.socials.github}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => sounds.playClick()}
+                title="GitHub: @zakikhairi"
+                className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border-2 border-[#0B1440] shadow-[2px_2px_0px_#0B1440] hover:border-purple-500 hover:bg-purple-500/20 hover:scale-105 active:scale-95 transition-all"
+              >
+                <GithubIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition">
+                  GitHub
+                </span>
+              </a>
+            </div>
+
+            {/* Mini Lo-Fi Beat Widget */}
+            <div className="pt-1 w-full max-w-sm">
+              <div className="rounded-xl p-2.5 bg-slate-900/90 border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={toggleMusic}
+                    className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-blue-600 border border-white/20 flex items-center justify-center text-white shadow hover:scale-105 transition cursor-pointer"
+                  >
+                    {isPlayingLofi ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
+                  </button>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <Music2 className="w-3.5 h-3.5 text-pink-400" />
+                      <span className="text-xs font-bold text-white">Lo-Fi Coding Vibe</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      {isPlayingLofi ? 'Memutar Suasana Fokus • 84 BPM' : 'Putar musik fokus'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Animated Equalizer Bars */}
+                <div className="flex items-end gap-1 h-5 pr-2">
+                  {['animate-eq-1', 'animate-eq-2', 'animate-eq-3', 'animate-eq-4', 'animate-eq-5', 'animate-eq-6', 'animate-eq-2'].map((animClass, i) => (
+                    <div
+                      key={i}
+                      className={`w-1 h-4 rounded-full ${
+                        isPlayingLofi
+                          ? `${animClass} bg-gradient-to-t from-red-500 to-yellow-400`
+                          : 'bg-slate-700 scale-y-25'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Top Right Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-blue-500/50 text-blue-300 text-xs font-mono shadow-xl shadow-blue-500/20 backdrop-blur-md absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
-            </span>
-            <span>🕸️ Web-Slinger on Vercel</span>
-          </div>
+          {/* Right Column: 3D Lanyard Interactive Badge with Comic Badges */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+            {/* Top Left Floating Satellite Pill */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#e62429] text-white text-xs font-anton tracking-wide border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] absolute -top-4 -left-6 z-20 animate-float-slow select-none pointer-events-none">
+              <span className="text-sm">🕷️</span>
+              <span>SPIDER-SENSE</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-black/40 text-yellow-300 font-mono font-bold">100%</span>
+            </div>
 
-          {/* Bottom Left Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-xl shadow-amber-500/10 backdrop-blur-md absolute bottom-8 -left-8 z-20 animate-float-reverse select-none pointer-events-none">
-            <span className="text-base">🏆</span>
-            <span>Juara 1 Film Provinsi</span>
-          </div>
+            {/* Top Right Floating Satellite Pill */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1e5fb0] text-white text-xs font-anton tracking-wide border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] absolute top-12 -right-6 z-20 animate-float-reverse select-none pointer-events-none">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span>
+              </span>
+              <span>🕸️ WEB-SLINGER VERCEL</span>
+            </div>
 
-          {/* Bottom Right Floating Satellite Pill */}
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-900/90 border border-red-500/40 text-rose-300 text-xs font-semibold shadow-xl shadow-red-500/10 backdrop-blur-md absolute -bottom-2 -right-4 z-20 animate-float-slow select-none pointer-events-none">
-            <span className="text-base">⚡</span>
-            <span>Bio-Electric 120 FPS</span>
-          </div>
+            {/* Bottom Left Floating Satellite Pill */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ff7b00] text-slate-950 text-xs font-anton tracking-wide border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] absolute bottom-8 -left-8 z-20 animate-float-reverse select-none pointer-events-none">
+              <span className="text-sm">🏆</span>
+              <span>JUARA 1 TINGKAT PROVINSI</span>
+            </div>
 
-          <InteractiveLanyard profile={profile} />
+            {/* Bottom Right Floating Satellite Pill */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0d1a45] text-cyan-300 text-xs font-anton tracking-wide border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] absolute -bottom-2 -right-4 z-20 animate-float-slow select-none pointer-events-none">
+              <span className="text-sm">⚡</span>
+              <span>IPK 3.75 GUNADARMA</span>
+            </div>
+
+            <InteractiveLanyard profile={profile} />
+          </div>
+        </div>
+      </div>
+
+      {/* Infinite Scrolling Comic Marquee Ticker at bottom */}
+      <div className="relative w-full mt-10 h-13 sm:h-15 bg-[#e62429] border-y-[3px] border-[#ff7b00] overflow-hidden shadow-[0_-5px_20px_rgba(0,0,0,0.5)] z-20 flex items-center">
+        {/* Halftone texture overlay */}
+        <div className="comic-halftone-bg absolute inset-0 opacity-15 pointer-events-none" />
+        
+        <div className="animate-marquee flex items-center gap-8 whitespace-nowrap select-none font-anton text-sm sm:text-base text-white uppercase italic tracking-widest px-4">
+          {[...Array(4)].map((_, i) => (
+            <React.Fragment key={i}>
+              <span className="flex items-center gap-1.5">
+                <span>🕷️</span> FRIENDLY NEIGHBORHOOD TECH
+              </span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+              <span>SUTRADARA FILM TANAH JAWARA</span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+              <span>PRODUSER JUARA 1 PLUS MINUS</span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+              <span>S1 SISTEM INFORMASI GUNADARMA (IPK 3.75)</span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+              <span>WAKIL KETUA CREATIVE MEDIA</span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+              <span>JUARA HARAPAN 1 FOTOGRAFI BADUY</span>
+              <span className="text-yellow-300 font-black text-xs">★</span>
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </section>

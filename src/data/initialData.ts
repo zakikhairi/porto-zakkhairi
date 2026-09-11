@@ -367,14 +367,14 @@ export const initialGuestbook: GuestbookEntry[] = [
 
 export const themes: Record<ThemeKey, ThemeConfig> = {
   spiderman: {
-    name: "Spider-Verse (Earth-1610)",
-    subtitle: "Spider Crimson, Web Blue & Bio-Electric",
-    primary: "#ef4444",
-    secondary: "#0284c7",
-    accent: "#facc15",
-    bgGradient: "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(239,68,68,0.30), rgba(2,132,199,0.22), rgba(5,7,15,1))",
-    glowColor: "rgba(239,68,68,0.45)",
-    badgeBg: "from-red-600 via-rose-600 to-blue-600"
+    name: "Spider-Man Comic (Classic)",
+    subtitle: "Royal Comic Blue, Marvel Red & Ben-Day Dots",
+    primary: "#e62429",
+    secondary: "#1e5fb0",
+    accent: "#ff7b00",
+    bgGradient: "linear-gradient(180deg, #0d52b3 0%, #0a4394 50%, #072d66 100%)",
+    glowColor: "rgba(230, 36, 41, 0.45)",
+    badgeBg: "from-red-600 via-rose-600 to-blue-700"
   },
   cyberpunk: {
     name: "Cyberpunk Neon",

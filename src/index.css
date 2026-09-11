@@ -280,3 +280,243 @@
 .animate-eq-5 { animation: eqScale 1.0s ease-in-out infinite 0.25s; transform-origin: bottom; }
 .animate-eq-6 { animation: eqScale 0.75s ease-in-out infinite 0.4s; transform-origin: bottom; }
 
+/* ============================================================
+   Spider-Man Comic Book Styling (Reference: Marvel Spider-Man)
+   ============================================================ */
+
+.font-bungee {
+  font-family: 'Bungee', cursive, sans-serif;
+}
+
+.font-bangers {
+  font-family: 'Bangers', cursive, sans-serif;
+}
+
+.font-anton {
+  font-family: 'Anton', 'Impact', sans-serif;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Comic Hard Offset Shadows */
+.comic-shadow {
+  box-shadow: 4px 4px 0px 0px #0A0E27;
+}
+
+.comic-shadow-lg {
+  box-shadow: 6px 6px 0px 0px #0A0E27;
+}
+
+.comic-shadow-red {
+  box-shadow: 4px 4px 0px 0px #e62429;
+}
+
+.comic-shadow-white {
+  box-shadow: 4px 4px 0px 0px #ffffff;
+}
+
+/* Comic Border */
+.comic-border {
+  border: 3px solid #0B1440;
+}
+
+.comic-border-2 {
+  border: 2px solid #0B1440;
+}
+
+/* Spider-Man 3D Comic Text Shadows */
+.spidey-text-3d {
+  text-shadow: 3px 3px 0px #e62429, -2px -2px 0px #1e5fb0, 5px 5px 0px #050a1c;
+}
+
+.spidey-text-red-blue {
+  text-shadow: 2px 2px 0px #e62429, -2px -2px 0px #1e5fb0;
+}
+
+/* Comic Halftone Ben-Day Dots Pattern */
+.comic-halftone-bg {
+  background-image: radial-gradient(rgba(11, 20, 64, 0.4) 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
+}
+
+.comic-halftone-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+}
+
+/* Infinite Marquee Banner Animation */
+@keyframes scrollMarquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: scrollMarquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   Marvel Spider-Man Arched Logo & Comic Styles
+   ============================================================ */
+.spidey-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+.spidey-logo__top {
+  background-color: #ed1d24;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+  font-size: 0.95rem;
+  padding: 0.1rem 0.4rem;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  transform: scale(0.9, 1.4);
+  margin-bottom: 0.35rem;
+  z-index: 10;
+  border: 1.5px solid #0B1440;
+  box-shadow: 2px 2px 0px #0B1440;
+}
+
+.spidey-logo__bottom {
+  display: flex;
+  align-items: flex-end;
+  font-family: 'Anton', Impact, 'Arial Black', sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  transform: scale(0.92, 1.35);
+}
+
+.spidey-logo__bottom span {
+  display: block;
+  color: white;
+  -webkit-text-stroke: 2px #ed1d24;
+  text-shadow: 
+    0px 1px 0 #0B1440, 0px 2px 0 #0B1440, 0px 3px 0 #0B1440, 0px 4px 0 #0B1440,
+    0px 5px 0 #0B1440, 0px 6px 0 #0B1440, 0px 7px 0 #0B1440, 0px 8px 0 #0B1440,
+    0px 9px 0 #0B1440, 0px 10px 0 #0B1440,
+    0px 12px 10px rgba(11, 20, 64, 0.7);
+  transition: transform 0.2s ease, -webkit-text-stroke 0.2s ease;
+}
+
+.spidey-l-1  { transform: translateY(0) rotate(-8deg); font-size: 1.3em; }
+.spidey-l-2  { transform: translateY(-0.15em) rotate(-6deg); font-size: 1.2em; }
+.spidey-l-3  { transform: translateY(-0.25em) rotate(-4deg); font-size: 1.1em; }
+.spidey-l-4  { transform: translateY(-0.35em) rotate(-2deg); font-size: 1.05em; }
+.spidey-l-5  { transform: translateY(-0.4em) rotate(0deg); font-size: 1em; }
+
+.spidey-l-dash { transform: translateY(-0.4em) rotate(0deg); font-size: 0.9em; margin: 0 0.15em; }
+
+.spidey-l-6  { transform: translateY(-0.4em) rotate(0deg); font-size: 1em; }
+.spidey-l-7  { transform: translateY(-0.35em) rotate(2deg); font-size: 1.05em; }
+.spidey-l-8  { transform: translateY(-0.25em) rotate(4deg); font-size: 1.1em; }
+.spidey-l-9  { transform: translateY(-0.15em) rotate(6deg); font-size: 1.2em; }
+.spidey-l-10 { transform: translateY(0) rotate(8deg); font-size: 1.3em; }
+
+/* Comic Neo-Brutalist Button Style */
+.comic-btn-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #e62429;
+  color: #ffffff;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.4rem;
+  border: 2.5px solid #0B1440;
+  box-shadow: 4px 4px 0px #0B1440;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.comic-btn-red:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0B1440;
+  background-color: #ff3338;
+  color: #ffffff;
+}
+
+.comic-btn-red:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #0B1440;
+}
+
+.comic-btn-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #1e5fb0;
+  color: #ffffff;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.4rem;
+  border: 2.5px solid #0B1440;
+  box-shadow: 4px 4px 0px #0B1440;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.comic-btn-blue:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0B1440;
+  background-color: #2b77db;
+  color: #ffffff;
+}
+
+.comic-btn-blue:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #0B1440;
+}
+
+.comic-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #0d1a45;
+  color: #e2e8f0;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.4rem;
+  border: 2.5px solid #0B1440;
+  box-shadow: 4px 4px 0px #0B1440;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.comic-btn-dark:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #0B1440;
+  background-color: #16296b;
+  color: #ffffff;
+}
+
+.comic-btn-dark:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #0B1440;
+}
+
+

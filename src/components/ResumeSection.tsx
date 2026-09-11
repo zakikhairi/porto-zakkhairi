@@ -92,26 +92,26 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
       <div className="absolute bottom-10 left-10 w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
+      <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/90 border-2 border-[#0B1440] text-cyan-300 text-xs font-mono shadow-[2px_2px_0px_#0B1440]">
           <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Curriculum Vitae & Rekam Jejak</span>
+          <span>// DOSSIER & TRACK RECORD</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-          Pendidikan, Organisasi & Keahlian
+        <h2 className="text-3xl sm:text-5xl font-anton text-white tracking-wide uppercase spidey-text-3d">
+          PENDIDIKAN, ORGANISASI & KEAHLIAN
         </h2>
-        <p className="text-slate-400 text-sm leading-relaxed">
-          Dedikasi akademik di Universitas Gunadarma, rekam jejak kepemimpinan Creative Media Lebak Expo University, serta kompetensi teknis profesional.
+        <p className="text-slate-300 text-sm leading-relaxed">
+          Dedikasi akademik di Universitas Gunadarma (IPK 3.75), kepemimpinan Creative Media Lebak Expo University, dan keahlian media sinematik.
         </p>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex flex-wrap justify-center gap-2 mb-12">
         {[
-          { id: 'all', label: '✨ Semua Ringkasan' },
-          { id: 'education', label: '🎓 Pendidikan (Education)' },
-          { id: 'experience', label: '💼 Pengalaman Organisasi' },
-          { id: 'skills', label: '⚡ Keahlian CV & Tools' }
+          { id: 'all', label: '★ SEMUA RINGKASAN' },
+          { id: 'education', label: '🎓 PENDIDIKAN RESMI' },
+          { id: 'experience', label: '💼 PENGALAMAN & ORGANISASI' },
+          { id: 'skills', label: '⚡ KEAHLIAN & TOOLS' }
         ].map((tab) => (
           <button
             key={tab.id}
@@ -119,10 +119,10 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({
               setActiveTab(tab.id as any);
               sounds.playClick();
             }}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-anton uppercase italic tracking-wider transition cursor-pointer flex items-center gap-2 ${
               activeTab === tab.id
-                ? 'bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 text-white shadow-lg shadow-purple-500/25 scale-105'
-                : 'glass-card text-slate-300 hover:text-white hover:bg-white/10'
+                ? 'bg-[#e62429] text-white border-2 border-[#0B1440] shadow-[3px_3px_0px_#0B1440] scale-105'
+                : 'bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border-2 border-[#0B1440]'
             }`}
           >
             {tab.label}
