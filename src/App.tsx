@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { AboutSectionTwo } from './components/AboutSectionTwo';
+import { DoubleMarqueeDivider } from './components/DoubleMarqueeDivider';
+import { HangingSpiderman } from './components/HangingSpiderman';
 import { BentoGrid } from './components/BentoGrid';
 import { ProjectsSection } from './components/ProjectsSection';
 import { GuestbookSection } from './components/GuestbookSection';
@@ -334,10 +337,25 @@ export function App() {
         }}
       />
 
+      {/* Spider-Man Hanging Upside Down from Web Thread */}
+      <HangingSpiderman />
+
       {/* Main Content Sections */}
       <main className="relative z-10">
         <HeroSection
           profile={profile}
+        />
+
+        {/* Section 2: Origin, Quote & 3 Comic Stat Cards */}
+        <AboutSectionTwo
+          profile={profile}
+        />
+
+        {/* Double Crossing Diagonal Marquee Divider */}
+        <DoubleMarqueeDivider />
+
+        <ProjectsSection
+          projects={projects}
         />
 
         <BentoGrid
@@ -347,10 +365,6 @@ export function App() {
 
         <ResumeSection
           profile={profile}
-        />
-
-        <ProjectsSection
-          projects={projects}
         />
 
         <GuestbookSection
