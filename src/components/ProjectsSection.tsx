@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, Sparkles, FolderGit2, X, CheckCircle2, Play, Clapperboard, Camera, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Sparkles, FolderGit2, X, CheckCircle2, Play, Clapperboard, Camera, ChevronLeft, ChevronRight, LayoutGrid, Film } from 'lucide-react';
 import type { Project } from '../types/portfolio';
 import { GithubIcon } from './icons/GithubIcon';
 import { InstagramIcon } from './icons/InstagramIcon';
 import { sounds } from '../utils/soundEffects';
+import { GlassyProjectsCarousel } from './GlassyProjectsCarousel';
 
 interface ProjectsProps {
   projects: Project[];
@@ -14,6 +15,7 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [cardSlideIndex, setCardSlideIndex] = useState<{ [projectId: string]: number }>({});
   const [modalSlideIndex, setModalSlideIndex] = useState<number>(0);
+  const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
 
   // Keyboard Escape listener & body scroll lock when modal is open
   useEffect(() => {
@@ -81,29 +83,76 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
           Koleksi karya film sinematik, karya fotografi peraih juara, web aplikasi interaktif, dan sistem TI.
         </p>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
-          {filters.map(filter => (
+        {/* Filter Buttons & View Mode Switcher */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {filters.map(filter => (
+              <button
+                key={filter.id}
+                onClick={() => {
+                  setActiveFilter(filter.id as typeof activeFilter);
+                  sounds.playClick();
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                  activeFilter === filter.id
+                    ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-purple-500/25'
+                    : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/5'
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+
+          {/* View Mode Switcher: 3D Deck (TikTok Style) vs Grid */}
+          <div className="flex items-center p-1 rounded-2xl bg-slate-900/90 border border-white/15 backdrop-blur-md shadow-lg shrink-0">
             <button
-              key={filter.id}
+              type="button"
               onClick={() => {
-                setActiveFilter(filter.id as typeof activeFilter);
+                setViewMode('carousel');
                 sounds.playClick();
               }}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition ${
-                activeFilter === filter.id
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-purple-500/25'
-                  : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/5'
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                viewMode === 'carousel'
+                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
               }`}
+              title="Tampilan 3D Glassy Deck (ala TikTok UI)"
             >
-              {filter.label}
+              <Film className="w-3.5 h-3.5" />
+              <span>3D Deck</span>
             </button>
-          ))}
+
+            <button
+              type="button"
+              onClick={() => {
+                setViewMode('grid');
+                sounds.playClick();
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                viewMode === 'grid'
+                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Tampilan Grid Galeri Klasik"
+            >
+              <LayoutGrid className="w-3.5 h-3.5" />
+              <span>Grid</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Showcase View: 3D Glassy Deck (Default) vs Classic Grid */}
+      {viewMode === 'carousel' ? (
+        <GlassyProjectsCarousel
+          projects={filteredProjects}
+          onSelectProject={handleCardClick}
+          onToggleViewMode={() => setViewMode('grid')}
+        />
+      ) : (
+        /* Projects Grid */
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProjects.map((project) => {
           const images = getProjectImages(project);
           const currentSlide = cardSlideIndex[project.id] || 0;
@@ -302,7 +351,8 @@ export const ProjectsSection: React.FC<ProjectsProps> = ({ projects }) => {
             </div>
           );
         })}
-      </div>
+        </div>
+      )}
 
       {/* Mini Cinema Player / Project Detail Modal */}
       {selectedProject && (
