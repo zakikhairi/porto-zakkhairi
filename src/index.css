@@ -46,6 +46,13 @@
     cursor: text !important;
   }
 
+  /* For fine pointer desktop devices, hide OS cursor so the Cinema Crosshair shines with zero double cursor glitch */
+  @media (pointer: fine) {
+    html, body, button, a, [role="button"], .cursor-pointer {
+      cursor: none !important;
+    }
+  }
+
   *:focus:not(:focus-visible) {
     outline: none !important;
   }

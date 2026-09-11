@@ -7,6 +7,8 @@ import { TiktokIcon } from './icons/TiktokIcon';
 import { YoutubeIcon } from './icons/YoutubeIcon';
 import { sounds } from '../utils/soundEffects';
 
+import { ContactDock } from './ContactDock';
+
 interface ContactProps {
   profile: ProfileData;
   onReplayIntro?: () => void;
@@ -46,7 +48,10 @@ export const ContactSection: React.FC<ContactProps> = ({ profile, onReplayIntro 
       {/* Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-600/15 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-6xl mx-auto space-y-16">
+      <div className="relative z-10 max-w-6xl mx-auto space-y-12">
+        {/* Interactive 3D CONTACT Mechanical Keycap Dock (TikTok style) */}
+        <ContactDock />
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Left Column (Col 6) */}
           <div className="lg:col-span-6 space-y-6">

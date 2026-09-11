@@ -5,8 +5,7 @@ export const CustomCursor: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(true);
 
-  const dotRef = useRef<HTMLDivElement>(null);
-  const auraRef = useRef<HTMLDivElement>(null);
+  const crosshairRef = useRef<HTMLDivElement>(null);
   const targetPos = useRef({ x: -100, y: -100 });
   const currentPos = useRef({ x: -100, y: -100 });
   const rafId = useRef<number | null>(null);
@@ -20,22 +19,19 @@ export const CustomCursor: React.FC = () => {
     setIsTouchDevice(false);
 
     const updateLoop = () => {
-      // Smooth linear interpolation for outer magnetic aura
+      // Instant precision tracking with ultra-smooth 60-120fps direct positioning
       const dx = targetPos.current.x - currentPos.current.x;
       const dy = targetPos.current.y - currentPos.current.y;
       
-      currentPos.current.x += dx * 0.22;
-      currentPos.current.y += dy * 0.22;
+      currentPos.current.x += dx * 0.35;
+      currentPos.current.y += dy * 0.35;
 
-      if (auraRef.current) {
-        auraRef.current.style.transform = `translate3d(${currentPos.current.x}px, ${currentPos.current.y}px, 0) translate(-50%, -50%)`;
-      }
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${targetPos.current.x}px, ${targetPos.current.y}px, 0) translate(-50%, -50%)`;
+      if (crosshairRef.current) {
+        // Exactly at mouse coordinates, perfectly centered
+        crosshairRef.current.style.transform = `translate3d(${targetPos.current.x}px, ${targetPos.current.y}px, 0) translate(-50%, -50%)`;
       }
 
-      // Keep loop running if there's noticeable motion or mouse is active
-      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+      if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) {
         rafId.current = requestAnimationFrame(updateLoop);
         isRunning.current = true;
       } else {
@@ -53,9 +49,8 @@ export const CustomCursor: React.FC = () => {
         rafId.current = requestAnimationFrame(updateLoop);
       }
 
-      // Throttle hover DOM query to once every 60ms
       const now = performance.now();
-      if (now - hoverCheckThrottle > 60) {
+      if (now - hoverCheckThrottle > 45) {
         hoverCheckThrottle = now;
         const target = e.target as HTMLElement | null;
         if (target) {
@@ -85,32 +80,52 @@ export const CustomCursor: React.FC = () => {
   if (isTouchDevice || !isVisible) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden select-none">
-      {/* Outer Fluid Magnetic Aura Ring */}
+    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none">
+      {/* Precision Cinema Crosshair Cursor (Zero Offset, Centered) */}
       <div
-        ref={auraRef}
+        ref={crosshairRef}
         style={{
           transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)',
           willChange: 'transform',
         }}
-        className={`fixed w-8 h-8 rounded-full pointer-events-none transition-all duration-200 ease-out ${
-          isHovered
-            ? 'scale-150 bg-cyan-400/20 border border-cyan-400/80 shadow-[0_0_20px_rgba(6,182,212,0.45)]'
-            : 'scale-90 bg-pink-500/15 border border-pink-400/40 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
-        }`}
-      />
+        className="fixed top-0 left-0 pointer-events-none flex items-center justify-center transition-all duration-200 ease-out"
+      >
+        {/* Outer Focus Reticle Ring / Target Box */}
+        <div
+          className={`relative flex items-center justify-center rounded-full transition-all duration-200 ${
+            isHovered
+              ? 'w-10 h-10 border border-cyan-400 bg-cyan-400/10 shadow-[0_0_16px_rgba(6,182,212,0.6)] scale-110'
+              : 'w-6 h-6 border border-white/40 bg-white/5 scale-90'
+          }`}
+        >
+          {/* Top Reticle Tick */}
+          <div className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-[1.5px] h-1.5 transition-colors ${
+            isHovered ? 'bg-cyan-400' : 'bg-white/60'
+          }`} />
 
-      {/* Center Precision Dot */}
-      <div
-        ref={dotRef}
-        style={{
-          transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)',
-          willChange: 'transform',
-        }}
-        className={`fixed rounded-full pointer-events-none transition-colors duration-150 ${
-          isHovered ? 'w-2 h-2 bg-cyan-300 shadow-[0_0_8px_rgba(6,182,212,0.8)]' : 'w-1.5 h-1.5 bg-white shadow-[0_0_6px_rgba(255,255,255,0.7)]'
-        }`}
-      />
+          {/* Bottom Reticle Tick */}
+          <div className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-[1.5px] h-1.5 transition-colors ${
+            isHovered ? 'bg-cyan-400' : 'bg-white/60'
+          }`} />
+
+          {/* Left Reticle Tick */}
+          <div className={`absolute -left-1.5 top-1/2 -translate-y-1/2 h-[1.5px] w-1.5 transition-colors ${
+            isHovered ? 'bg-cyan-400' : 'bg-white/60'
+          }`} />
+
+          {/* Right Reticle Tick */}
+          <div className={`absolute -right-1.5 top-1/2 -translate-y-1/2 h-[1.5px] w-1.5 transition-colors ${
+            isHovered ? 'bg-cyan-400' : 'bg-white/60'
+          }`} />
+
+          {/* Center Precision Aim Dot */}
+          <div className={`rounded-full transition-all duration-150 ${
+            isHovered 
+              ? 'w-2 h-2 bg-pink-400 shadow-[0_0_8px_#f43f5e]' 
+              : 'w-1.5 h-1.5 bg-white shadow-[0_0_5px_#ffffff]'
+          }`} />
+        </div>
+      </div>
     </div>
   );
 };
